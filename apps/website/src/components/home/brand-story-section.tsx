@@ -12,52 +12,74 @@ export function BrandStorySection() {
   const { story } = HOME_DATA;
 
   return (
-    <section className="relative z-10 rounded-4xl py-24 bg-[#171411] border-b border-[#352d26] overflow-hidden shadow-2xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Story Image */}
-          <div className="relative h-[420px] sm:h-[500px] rounded-3xl overflow-hidden border border-[#352d26] shadow-2xl">
-            <Image
-              src={story.image}
-              alt="Super Black Coffee Roaster Story"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#171411] via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/70 backdrop-blur-md border border-[#352d26]">
-              <div className="text-xs font-mono text-[#c69255] font-semibold">
-                CENTRAL ROASTING LAB
-              </div>
-              <div className="text-sm font-bold text-white mt-0.5">
-                {story.subBadge[language]}
-              </div>
-            </div>
+    <section className="relative z-10 py-32 sm:py-40 bg-black overflow-hidden">
+      {/* Background Image: Coffee Journey from Farm to Cup */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/about/coffee-journey-transparent.webp"
+          alt="Super Black Coffee Journey from Farm to Cup"
+          fill
+          priority={false}
+          className="object-cover object-center scale-105"
+          sizes="100vw"
+        />
+        {/* Background Overlays */}
+        {/* Base: เพิ่มความมืดเล็กน้อยทั่วทั้งภาพ */}
+        <div className="absolute inset-0 bg-black/10" />
+
+        {/* Main Gradient: ซ้ายสว่าง → ขวามืด */}
+        <div
+          className="
+            absolute inset-0
+            bg-gradient-to-r
+            from-transparent
+            via-black/35
+            to-black/85
+          "
+        />
+
+        {/* Top Gradient: ค่อย ๆ ไล่จากสีดำสนิทลงมา เพื่อเชื่อมต่อกับ Section ด้านบนอย่างไร้รอยต่อ */}
+        <div
+          className="
+            absolute inset-x-0 top-0 h-40 sm:h-56
+            bg-gradient-to-b
+            from-black
+            via-black/60
+            to-transparent
+          "
+        />
+
+        {/* Bottom Gradient: ค่อย ๆ ไล่ลงสู่สีดำสนิท เพื่อเชื่อมต่อกับ Section ด้านล่างอย่างไร้รอยต่อ */}
+        <div
+          className="
+            absolute inset-x-0 bottom-0 h-48 sm:h-64
+            bg-gradient-to-t
+            from-black
+            via-black/70
+            to-transparent
+          "
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl ml-auto text-left space-y-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.2]">
+            {story.title[language]}
+          </h2>
+
+          <div className="space-y-4 text-sm sm:text-base text-stone-300 leading-relaxed font-normal">
+            <p>{story.desc1[language]}</p>
+            <p>{story.desc2[language]}</p>
           </div>
 
-          {/* Story Content */}
-          <div className="space-y-6">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#c69255] uppercase">
-              {story.badge[language]}
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-              {story.title[language]}
-            </h2>
-            <p className="text-sm text-[#c5b8ae] leading-relaxed">
-              {story.desc1[language]}
-            </p>
-            <p className="text-sm text-[#c5b8ae] leading-relaxed">
-              {story.desc2[language]}
-            </p>
-            <div className="pt-4">
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#201b16] border border-[#352d26] hover:border-[#c69255] text-white text-xs font-bold transition-all hover:scale-105"
-              >
-                <span>{story.learnMoreText[language]}</span>
-                <ArrowRight className="w-4 h-4 text-[#c69255]" />
-              </Link>
-            </div>
+          <div className="pt-4 flex items-center gap-4">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#c69255] to-[#d8a162] hover:brightness-110 text-stone-950 text-sm font-bold transition-all hover:scale-[1.02] shadow-[0_8px_25px_rgba(216,161,98,0.25)]"
+            >
+              <span>{story.learnMoreText[language]}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, X, MapPin } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import {
   BRANCH_PROMOTIONS,
@@ -62,7 +62,7 @@ export function BranchPromotionsSection() {
   };
 
   return (
-    <section className="bg-black relative overflow-hidden">
+    <section className="bg-black relative overflow-hidden mt-16 sm:mt-30">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-0 w-112.5 h-112.5 bg-amber-600/5 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-112.5 h-112.5 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
@@ -81,21 +81,21 @@ export function BranchPromotionsSection() {
             </p>
           </div>
 
-          {/* Carousel Arrows (Desktop) */}
-          <div className="hidden sm:flex items-center gap-2">
+          {/* Carousel Arrows (Desktop) - matching reference screenshot */}
+          <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={() => scroll("left")}
               aria-label="Previous promotions"
-              className="w-11 h-11 rounded-full border border-[#332b24] bg-[#14100e] hover:bg-[#201a15] hover:border-[#c69255] text-white flex items-center justify-center transition-all cursor-pointer"
+              className="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm active:scale-95"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scroll("right")}
               aria-label="Next promotions"
-              className="w-11 h-11 rounded-full border border-[#332b24] bg-[#14100e] hover:bg-[#201a15] hover:border-[#c69255] text-white flex items-center justify-center transition-all cursor-pointer"
+              className="w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 cursor-pointer backdrop-blur-sm active:scale-95"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -127,13 +127,13 @@ export function BranchPromotionsSection() {
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
-          className="flex gap-5 sm:gap-6 overflow-x-auto pb-6 pt-2 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0"
+          className="flex gap-6 overflow-x-auto pb-6 pt-2 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {filteredPromotions.map((promo) => (
+          {filteredPromotions.map((promo, idx) => (
             <div
               key={promo.id}
-              className="min-w-55 sm:min-w-[260px] md:min-w-[280px] max-w-[280px] flex-shrink-0 snap-start"
+              className="w-[290px] sm:w-[320px] md:w-[340px] flex-shrink-0 snap-start"
             >
               <PromotionCard
                 item={promo}
@@ -183,11 +183,11 @@ export function BranchPromotionsSection() {
             {/* Poster Footer Info */}
             <div className="p-5 flex items-center justify-between bg-[#191411] border-t border-[#2d241d]">
               <div>
-                <span className="text-xs text-[#c69255] font-mono flex items-center gap-1">
+                <span className="text-xs text-[#c69255] font-medium flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5" />
                   {activeModalPromo.tag[language]}
                 </span>
-                <h3 className="text-base font-bold text-white mt-0.5">
+                <h3 className="text-base font-medium text-white mt-0.5">
                   {activeModalPromo.title[language]}
                 </h3>
               </div>

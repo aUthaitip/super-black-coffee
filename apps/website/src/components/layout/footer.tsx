@@ -3,20 +3,16 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUp, MessageCircle, AlertCircle, X } from "lucide-react";
+import { Phone, Mail, MessageCircle, Globe, ChevronDown, AlertCircle, X } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { LAYOUT_DATA } from "@/data/layout";
 
 export function Footer() {
-  const { language } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const [socialModalOpen, setSocialModalOpen] = useState(false);
   const [activeSocial, setActiveSocial] = useState<string>("");
 
-  const { brand, navLinks, footer } = LAYOUT_DATA;
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const { brand, navLinks } = LAYOUT_DATA;
 
   const handleSocialClick = (platform: string) => {
     setActiveSocial(platform);
@@ -24,137 +20,167 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-black border-t border-[#352d26] text-[#c5b8ae] pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#28221c]">
-          {/* Column 1 & 2: Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative w-11 h-11 rounded-2xl overflow-hidden bg-[#201b16] border border-[#352d26] flex items-center justify-center p-0.5">
+    <footer className="relative z-10 bg-black text-[#a1a1aa] pt-26 pb-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Grid: Brand (Left) | Menu (Center) | Contact (Right) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 pb-16">
+          
+          {/* Column 1: Brand Logo & Description */}
+          <div className="md:col-span-6 lg:col-span-6 space-y-5 text-left">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="relative w-9 h-9 overflow-hidden flex items-center justify-center">
                 <Image
                   src="/logo/superblackcoffee-logo.webp"
                   alt="Super Black Coffee Logo"
-                  width={44}
-                  height={44}
+                  width={36}
+                  height={36}
                   className="object-contain w-full h-full"
                 />
               </div>
-              <div>
-                <span className="text-xl font-black tracking-wider text-white">
-                  {brand.name}
-                </span>
-              </div>
+              <span className="text-xl font-black tracking-wider text-white">
+                {brand.name}
+              </span>
             </Link>
-            <p className="text-xs text-[#9e9187] leading-relaxed max-w-sm">
+
+            <p className="text-sm text-[#71717a] leading-relaxed max-w-md font-normal">
               {brand.description[language]}
             </p>
-            <div className="pt-2">
-              <span className="text-[11px] font-mono font-semibold text-[#c69255] uppercase tracking-wider block mb-1">
-                {brand.tagline[language]}
-              </span>
-              <span className="text-[11px] font-mono text-[#9e9187] block">
-                {brand.engTagline}
-              </span>
-            </div>
           </div>
 
-          {/* Column 3: Quick Navigation */}
-          <div>
-            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-4">
-              {footer.quickLinksTitle[language]}
+          {/* Column 2: Navigation Links (เมนู) */}
+          <div className="md:col-span-3 lg:col-span-3 text-left">
+            <h4 className="text-sm font-medium text-white mb-5">
+              {language === "th" ? "เมนู" : "Menu"}
             </h4>
-            <ul className="space-y-2.5 text-xs">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="hover:text-[#c69255] transition-colors">
-                    {link.label[language]}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-3.5 text-sm">
+              <li>
+                <Link href="/" className="hover:text-white transition-colors">
+                  {language === "th" ? "หน้าแรก" : "Home"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/menu" className="hover:text-white transition-colors">
+                  {language === "th" ? "เมนูเครื่องดื่ม" : "Drink Menu"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  {language === "th" ? "เกี่ยวกับเรา" : "About Us"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/branches" className="hover:text-white transition-colors">
+                  {language === "th" ? "ค้นหาสาขา" : "Find Branches"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/franchise" className="hover:text-white transition-colors">
+                  {language === "th" ? "แพ็กเกจแฟรนไชส์" : "Franchise"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  {language === "th" ? "ติดต่อเรา" : "Contact Us"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  {language === "th" ? "ความเป็นส่วนตัว" : "Privacy Policy"}
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Column 4: Support & Business Inquiries */}
-          <div>
-            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-4">
-              {footer.supportTitle[language]}
+          {/* Column 3: Contact & Channels (ติดต่อ) */}
+          <div className="md:col-span-3 lg:col-span-3 text-left">
+            <h4 className="text-sm font-medium text-white mb-5">
+              {language === "th" ? "ติดต่อ" : "Contact"}
             </h4>
-            <ul className="space-y-2.5 text-xs text-[#9e9187]">
+            <ul className="space-y-4 text-sm">
+              {/* Phone */}
               <li>
-                <span className="block text-white font-bold">Headquarters Contact</span>
-                <span className="text-[11px] font-mono">{footer.contactEmail}</span>
+                <a
+                  href="tel:021148678"
+                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
+                    <Phone className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-normal font-mono">02-888-9999</span>
+                </a>
               </li>
+
+              {/* Email */}
               <li>
-                <span className="block text-white font-bold">Franchise Desk</span>
-                <span className="text-[11px] font-mono">{footer.franchiseEmail}</span>
+                <a
+                  href="mailto:contact@superblackcoffee.com"
+                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
+                    <Mail className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-normal font-mono">contact@superblackcoffee.com</span>
+                </a>
               </li>
-              <li className="pt-2">
-                <span className="block text-white font-bold">{footer.hoursTitle[language]}</span>
-                <span className="text-[11px]">{footer.hoursDetail[language]}</span>
+
+              {/* LINE Official */}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleSocialClick("LINE Official")}
+                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
+                    <MessageCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-normal font-mono">@superblackcoffee</span>
+                </button>
+              </li>
+
+              {/* Facebook */}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleSocialClick("Facebook")}
+                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
+                    <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </div>
+                  <span className="font-normal">Super Black Coffee</span>
+                </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 5: Social Channels & Back to Top */}
-          <div>
-            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-white mb-4">
-              {footer.followUsTitle[language]}
-            </h4>
-            <div className="flex items-center gap-2 mb-6">
-              <button
-                type="button"
-                onClick={() => handleSocialClick("Facebook")}
-                className="w-9 h-9 rounded-lg bg-[#201b16] border border-[#352d26] flex items-center justify-center text-[#c5b8ae] hover:text-[#c69255] hover:border-[#c69255]/50 transition-colors"
-                aria-label="Facebook"
-              >
-                <span className="font-bold text-xs font-mono">FB</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSocialClick("Instagram")}
-                className="w-9 h-9 rounded-lg bg-[#201b16] border border-[#352d26] flex items-center justify-center text-[#c5b8ae] hover:text-[#c69255] hover:border-[#c69255]/50 transition-colors"
-                aria-label="Instagram"
-              >
-                <span className="font-bold text-xs font-mono">IG</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSocialClick("LINE Official")}
-                className="w-9 h-9 rounded-lg bg-[#201b16] border border-[#352d26] flex items-center justify-center text-[#c5b8ae] hover:text-[#c69255] hover:border-[#c69255]/50 transition-colors"
-                aria-label="LINE Official"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </button>
-            </div>
+        </div>
 
+        {/* Thin Divider Line matching screenshot */}
+        <div className="border-t border-white/10" />
+
+        {/* Bottom Bar: Copyright & Language Selector */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717a]">
+          <div>
+            <span>© 2026 SUPER BLACK COFFEE สงวนลิขสิทธิ์</span>
+          </div>
+
+          {/* Minimalist Globe Language Selector matching screenshot */}
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#201b16] border border-[#352d26] text-xs font-bold text-[#c5b8ae] hover:text-white hover:border-[#c69255] transition-colors"
+              onClick={() => setLanguage(language === "th" ? "en" : "th")}
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#a1a1aa] hover:text-white transition-colors cursor-pointer px-2 py-1 rounded-md hover:bg-white/5"
             >
-              <ArrowUp className="w-3.5 h-3.5 text-[#c69255]" />
-              <span>{footer.backToTop[language]}</span>
+              <Globe className="w-4 h-4" />
+              <span>{language.toUpperCase()}</span>
+              <ChevronDown className="w-3.5 h-3.5 opacity-60" />
             </button>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Policies */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#9e9187]">
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
-            <span>© 2026 SUPER BLACK COFFEE CO., LTD. {footer.rights[language]}</span>
-            <span className="hidden sm:inline text-[#352d26]">•</span>
-            <span className="text-[#bf9576] font-mono text-[11px]">{footer.demoNotice[language]}</span>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-white transition-colors">
-              {footer.privacy[language]}
-            </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              {footer.terms[language]}
-            </Link>
-          </div>
-        </div>
       </div>
 
       {/* Social Media Explanatory Dialog */}

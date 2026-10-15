@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { LAYOUT_DATA } from "@/data/layout";
 import { cn } from "@/lib/utils";
@@ -42,24 +41,11 @@ export function Navbar() {
       )}
     >
       <div className="flex h-16 w-full flex-row items-center justify-between container mx-auto">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group pl-1">
-          <div className="relative w-10 h-10 overflow-hidden flex items-center justify-center p-0.5">
-            <Image
-              src="/logo/superblackcoffee-logo.webp"
-              alt="Super Black Coffee Logo"
-              width={40}
-              height={40}
-              priority
-              className="object-contain w-full h-full"
-            />
-          </div>
           <div>
-            <span className="text-lg font-black tracking-wider text-white flex items-center gap-1">
+            <span className="text-lg font-semibold tracking-wider text-white flex items-center gap-1">
               {brand.name}
             </span>
           </div>
-        </Link>
 
         {/* Center Navigation Links (Desktop) */}
         <nav className="hidden lg:flex items-center gap-6">
@@ -72,8 +58,8 @@ export function Navbar() {
                 className={cn(
                   "text-sm tracking-wide transition-all relative py-1 px-2 rounded-lg font-medium text-white",
                   isActive
-                    ? "text-[#c69255] font-semibold bg-[#28221c]/50"
-                    : "hover:text-[#c69255] hover:bg-[#28221c]/30"
+                    ? "text-[#c69255] font-semibold"
+                    : "hover:text-[#c69255]"
                 )}
               >
                 {link.label[language]}
@@ -87,33 +73,17 @@ export function Navbar() {
 
         {/* Right Actions: Language Switcher & Portal Link */}
         <div className="flex items-center gap-3">
-          {/* Language Switcher */}
-          <div className="flex items-center bg-[#28221c]/80 border border-[#352d26]/60 rounded-xl p-0.5 text-[11px] font-semibold">
-            <button
-              type="button"
-              onClick={() => setLanguage("th")}
-              className={cn(
-                "px-2.5 py-1 rounded-lg transition-all",
-                language === "th"
-                  ? "bg-[#c69255] text-stone-950 shadow-sm font-bold"
-                  : "text-[#9e9187] hover:text-white"
-              )}
-            >
-              TH
-            </button>
-            <button
-              type="button"
-              onClick={() => setLanguage("en")}
-              className={cn(
-                "px-2.5 py-1 rounded-lg transition-all",
-                language === "en"
-                  ? "bg-[#c69255] text-stone-950 shadow-sm font-bold"
-                  : "text-[#9e9187] hover:text-white"
-              )}
-            >
-              EN
-            </button>
-          </div>
+          {/* Minimalist Globe Language Switcher matching reference screenshot */}
+          <button
+            type="button"
+            onClick={() => setLanguage(language === "th" ? "en" : "th")}
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase text-white hover:text-[#c69255] transition-colors cursor-pointer px-2.5 py-1.5 rounded-lg hover:bg-white/5 active:scale-95"
+            aria-label="Toggle language"
+          >
+            <Globe className="w-4 h-4 text-white" />
+            <span className="font-semibold tracking-wide text-white">{language.toUpperCase()}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-white opacity-80" />
+          </button>
 
           {/* Franchise Portal Info Link */}
           <Link

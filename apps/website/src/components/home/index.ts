@@ -6,3 +6,5 @@ export * from "./brand-story-section";
 export * from "./franchise-teaser-section";
 export * from "./branch-teaser-section";
 export * from "./final-cta-section";
+export * from "./faq-section";
+export * from "./contact-form-section";

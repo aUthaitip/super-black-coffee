@@ -166,10 +166,6 @@ export const HOME_DATA = {
   },
 
   story: {
-    badge: {
-      th: "OUR PHILOSOPHY",
-      en: "OUR PHILOSOPHY",
-    },
     title: {
       th: "เรื่องราวเบื้องหลังความเข้ม",
       en: "The Story Behind The Depth",
@@ -267,3 +263,4 @@ export const HOME_DATA = {
     },
   },
 };
+

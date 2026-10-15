@@ -8,6 +8,8 @@ import {
   BranchPromotionsSection,
   BrandStorySection,
   FinalCtaSection,
+  FaqSection,
+  ContactFormSection,
 } from "./index";
 
 export function HomePageContent() {
@@ -19,13 +21,19 @@ export function HomePageContent() {
       {/* Section B: Brand Highlights */}
       <HighlightsSection />
 
-      {/* Section C: Exclusive Branch Promotions (เลือกสิทธิ์พิเศษใกล้คุณ) */}
-      <BranchPromotionsSection />
-
-      {/* Section D: Brand Story */}
+      {/* Section C: Brand Story (เรื่องราวเบื้องหลังความเข้ม) */}
       <BrandStorySection />
 
-      {/* Section E: Final Editorial CTA */}
+      {/* Section D: Exclusive Branch Promotions (เลือกสิทธิ์พิเศษใกล้คุณ) */}
+      <BranchPromotionsSection />
+
+      {/* Section E: Frequently Asked Questions (FAQ) */}
+      <FaqSection />
+
+      {/* Section F: Contact Form Section */}
+      <ContactFormSection />
+
+      {/* Section G: Final Editorial CTA (สัมผัสความเข้มลึกที่แท้จริงได้แล้ววันนี้ - ล่างสุดก่อน Footer) */}
       <FinalCtaSection />
 
       {/* Festival & Seasonal Popup Dialog */}
