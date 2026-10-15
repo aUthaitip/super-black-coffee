@@ -20,5 +20,74 @@
 body {
   background-color: var(--color-brand-black);
   color: #f5ebe3;
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-prompt), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
+
+/* Allow header and navbar text to have sleek, medium weight */
+header, header * {
+  font-weight: 500;
+}
+
+header .font-black {
+  font-weight: 900;
+}
+
+header .font-bold {
+  font-weight: 600;
+}
+
+header .font-medium {
+  font-weight: 500;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0.5;
+    transform: scale(1.07);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Stack Card Motion from GPOS */
+.stack-card > article {
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .stack-card[data-stuck] > article {
+    box-shadow: 0 0 #0000;
+  }
+}
+
+/* Floating Up-Down Animation (Smooth Float) */
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-slow {
+  animation: floatUpDown 5s ease-in-out infinite;
+}
+
+.animate-float-card {
+  animation: floatUpDown 6s ease-in-out infinite;
+}
+

@@ -29,8 +29,14 @@ export function FinalCtaSection() {
       )}
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#c69255] to-[#8f6040] flex items-center justify-center text-stone-950 font-bold mx-auto mb-6 shadow-xl shadow-amber-950/40">
-          <Coffee className="w-7 h-7 text-stone-950" />
+        <div className="relative w-16 h-16 rounded-2xl overflow-hidden bg-[#201b16] border border-[#352d26] flex items-center justify-center p-1 mx-auto mb-6 shadow-xl shadow-amber-950/40">
+          <Image
+            src="/logo/superblackcoffee-logo.webp"
+            alt="Super Black Coffee Logo"
+            width={64}
+            height={64}
+            className="object-contain w-full h-full"
+          />
         </div>
         <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight">
           {finalCta.heading[language]}

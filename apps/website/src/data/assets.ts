@@ -10,6 +10,9 @@ export const SITE_IMAGES = {
     franchiseBusiness: "/hero/franchise-business.webp",
     contactConversation: "/hero/contact-conversation.webp",
   },
+  brand: {
+    logo: "/logo/superblackcoffee-logo.webp",
+  },
   cta: {
     finalCtaCoffee: "/FinalCtaSection/coffee.webp",
   },

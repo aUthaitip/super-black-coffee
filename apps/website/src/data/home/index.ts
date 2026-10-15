@@ -62,47 +62,90 @@ export const HOME_DATA = {
   },
 
   highlights: {
-    badge: {
-      th: "ความพิถีพิถันในทุกกระบวนการ",
-      en: "Excellence crafted into every cup",
-    },
+
     title: {
-      th: "หัวใจแห่ง Super Black",
-      en: "The Heart of Super Black",
+      th: "บริการครบวงจรเพื่อทุกการเดินทาง",
+      en: "All-in-One Coffee & Lifestyle Hub",
+    },
+    subtitle: {
+      th: "มากกว่าแค่ร้านกาแฟ สัมผัสประสบการณ์ไลฟ์สไตล์ฮับที่รวมกาแฟสเปเชียลตี้ สถานีชาร์จรถไฟฟ้า จุดส่งพัสดุด่วน และระบบบริหารจัดการระดับมาตรฐาน",
+      en: "More than just coffee. Experience our lifestyle hub combining specialty dark roast, EV fast charging, courier logistics, and enterprise smart management.",
     },
     items: [
       {
-        icon: "sparkles",
+        tag: "PREMIUM COFFEE",
         title: {
-          th: "คัดสรรเมล็ดกาแฟคุณภาพเยี่ยม",
-          en: "Carefully Selected Coffee",
+          th: "กาแฟพรีเมียมคัดสรร เพื่อทุกช่วงเวลาของคุณ",
+          en: "Specially selected premium coffee crafted for every rhythm of life.",
         },
         description: {
-          th: "เราคัดเลือกเฉพาะเมล็ดพันธุ์คุณภาพสูงจากแหล่งปลูกที่อุดมสมบูรณ์ ผ่านการดูแลจากเกษตรกรท้องถิ่นอย่างใกล้ชิด",
-          en: "Hand-picked specialty beans from sustainable origins, cultivated with care by trusted local highland farming communities.",
+          th: "เมล็ดพันธุ์อาราบิก้าสายพันธุ์พิเศษบนดอยสูง ผ่านการคั่วระดับ Deep Dark Roast ปลดล็อกกลิ่นอายดาร์กช็อกโกแลต คาราเมล และรสสัมผัสที่หนักแน่น",
+          en: "Single-origin highland Arabica beans roasted with signature precision to unlock velvety dark cocoa and caramel finish.",
         },
+        image: "/services/superblackcoffee-service-coffee.webp",
+        href: "/menu",
+        actionText: { th: "ดูรายละเอียด", en: "Explore Menu" },
+        accentColor: "#c69255",
       },
       {
-        icon: "flame",
+        tag: "EV CHARGING",
         title: {
-          th: "ศิลปะการคั่วระดับ Deep Roast",
-          en: "Crafted with Care & Deep Roast",
+          th: "แวะชาร์จรถไฟฟ้า พร้อมพักดื่มกาแฟระหว่างเดินทาง",
+          en: "EV Fast Charging Station paired with relaxing cafe moments.",
         },
         description: {
-          th: "สูตรการคั่วระดับเข้มลึกอันเป็นเอกลักษณ์ ปลดล็อกกลิ่นอายดาร์กช็อกโกแลต คาราเมลไหม้ และรสสัมผัสที่ยาวนาน",
-          en: "Our signature dark roasting profile unlocks intense dark cocoa, toasted caramel aroma, and an enduring velvety finish.",
+          th: "หัวชาร์จเร็ว DC Fast Charge กำลังไฟสูง สะดวก รวดเร็ว พร้อมพื้นที่นั่งพักผ่อนติดแอร์เย็นสบายและเครื่องดื่มแก้วโปรด",
+          en: "High-power DC fast-charging stations integrated seamlessly within our cafes for a comfortable recharge break.",
         },
+        image: "/services/superblackcoffee-service-ev-charging.webp",
+        href: "/branches",
+        actionText: { th: "ดูรายละเอียด", en: "View Stations" },
+        accentColor: "#38bdf8",
       },
       {
-        icon: "coffee",
+        tag: "BPOST65 EXPRESS",
         title: {
-          th: "กาแฟสำหรับทุกจังหวะชีวิต",
-          en: "Coffee for Every Moment",
+          th: "รับฝากส่งพัสดุในจุดแวะเดียวกับกาแฟของคุณ",
+          en: "One-stop express parcel drop-off right by your coffee.",
         },
         description: {
-          th: "ตั้งแต่แก้วแรกยามเช้าเพื่อปลุกพลัง จนถึงช่วงบ่ายที่ต้องการความคิดสร้างสรรค์ Super Black พร้อมอยู่เคียงข้างคุณ",
-          en: "From your essential morning fuel to inspiring afternoon creative breakthroughs, Super Black is always right beside you.",
+          th: "จุดบริการรับส่งพัสดุด่วนครอบคลุมทุกค่ายขนส่งชั้นนำ ส่งง่าย รวดเร็ว มั่นใจได้ ไม่ต้องเสียเวลาแวะหลายที่",
+          en: "Fast and reliable parcel drop-off service supporting major carriers right inside Super Black Coffee stores.",
         },
+        image: "/services/superblackcoffee-service-bpost65-express.webp",
+        href: "/about",
+        actionText: { th: "ดูรายละเอียด", en: "Learn More" },
+        accentColor: "#f87171",
+      },
+      {
+        tag: "FRANCHISE",
+        title: {
+          th: "ร่วมเติบโตไปด้วยกัน กับธุรกิจที่มั่นคง",
+          en: "Grow together with a proven, sustainable coffee business.",
+        },
+        description: {
+          th: "โมเดลธุรกิจคาเฟ่ & ไลฟ์สไตล์ฮับที่ออกแบบให้คืนทุนไว มีทีมงานเทรนนิ่ง และซัพพอร์ตระบบการตลาดอย่างใกล้ชิด",
+          en: "High-yield cafe franchise packages with end-to-end operational training and continuous marketing support.",
+        },
+        image: "/branches/branch-night-exterior.webp",
+        href: "/franchise",
+        actionText: { th: "ดูรายละเอียด", en: "Franchise Plans" },
+        accentColor: "#fbbf24",
+      },
+      {
+        tag: "SUPERBLACK CONTROL",
+        title: {
+          th: "ระบบบริหารจัดการร้านค้าและแฟรนไชส์ครบวงจร",
+          en: "Complete Smart POS & Enterprise Management Platform.",
+        },
+        description: {
+          th: "ระบบคลาวด์เชื่อมโยงยอดขาย สต็อกวัตถุดิบ บัญชี และระบบควบคุมคุณภาพสูตรชงแบบเรียลไทม์จากศูนย์กลาง HQ",
+          en: "Cloud-based enterprise ERP connecting real-time sales, inventory, and branch standard recipe control.",
+        },
+        image: "/services/superblackcoffee-service-control.webp",
+        href: "/franchise-portal",
+        actionText: { th: "ดูรายละเอียด", en: "System Details" },
+        accentColor: "#34d399",
       },
     ],
   },

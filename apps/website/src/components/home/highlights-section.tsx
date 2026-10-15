@@ -1,54 +1,164 @@
 "use client";
 
-import React from "react";
-import { Sparkles, Flame, Coffee } from "lucide-react";
+import React, { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/i18n/language-provider";
 import { HOME_DATA } from "@/data/home";
+import { HighlightCard } from "@/components/card";
+
+// GPOS StackCard component with stuck observer
+function StackCard({
+  top,
+  index,
+  children,
+}: {
+  top: number;
+  index: number;
+  children: React.ReactNode;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isStuck, setIsStuck] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const rect = el.getBoundingClientRect();
+      setIsStuck(rect.top <= top + 1);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [top]);
+
+  return (
+    <div
+      ref={cardRef}
+      className="stack-card lg:sticky"
+      data-stuck={isStuck ? "" : undefined}
+      style={{
+        top: `${top}px`,
+        zIndex: index + 1,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// GPOS StackCardGroup: Calculates dynamic min-height for stacked cards so they peek cleanly
+function StackCardGroup({
+  step = 20,
+  className,
+  children,
+}: {
+  step?: number;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    let animFrame = 0;
+
+    const recalculate = () => {
+      cancelAnimationFrame(animFrame);
+      animFrame = requestAnimationFrame(() => {
+        const articles = [
+          ...container.querySelectorAll<HTMLElement>(".stack-card > article"),
+        ];
+        articles.forEach((a) => a.style.removeProperty("min-height"));
+
+        if (!mediaQuery.matches) return;
+
+        const heights = articles.map((a) => a.offsetHeight);
+        let maxHeight = 0;
+
+        articles.forEach((art, idx) => {
+          const h = heights[idx] ?? 0;
+          maxHeight = Math.max(maxHeight, h + step * idx);
+          const computedMinHeight = maxHeight - step * idx;
+          if (computedMinHeight > h) {
+            art.style.minHeight = `${computedMinHeight}px`;
+          }
+        });
+      });
+    };
+
+    recalculate();
+
+    const observer = new ResizeObserver(recalculate);
+    container
+      .querySelectorAll(".stack-card > article")
+      .forEach((el) => observer.observe(el));
+
+    window.addEventListener("resize", recalculate);
+    return () => {
+      cancelAnimationFrame(animFrame);
+      observer.disconnect();
+      window.removeEventListener("resize", recalculate);
+    };
+  }, [step]);
+
+  return (
+    <div ref={containerRef} className={className}>
+      {children}
+    </div>
+  );
+}
 
 export function HighlightsSection() {
   const { language } = useLanguage();
   const { highlights } = HOME_DATA;
 
-  const renderIcon = (name: string) => {
-    switch (name) {
-      case "sparkles":
-        return <Sparkles className="w-6 h-6" />;
-      case "flame":
-        return <Flame className="w-6 h-6" />;
-      default:
-        return <Coffee className="w-6 h-6" />;
-    }
-  };
+  const baseTop = 110;
+  const step = 20;
 
   return (
-    <section className="py-24 bg-[#171411] border-b border-[#352d26]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono font-bold tracking-widest text-[#c69255] uppercase">
-            {highlights.badge[language]}
-          </span>
-          <h2 className="text-3xl font-black text-white mt-1">
-            {highlights.title[language]}
-          </h2>
-        </div>
+    <section className="w-full bg-black text-white relative my-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+          
+          {/* Left Sticky Column */}
+          <div className="flex shrink-0 flex-col items-start gap-6 lg:sticky lg:top-28 lg:max-w-md lg:self-start">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.2]">
+              {highlights.title[language]}
+            </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {highlights.items.map((item, idx) => (
-            <div
-              key={idx}
-              className="p-8 rounded-3xl bg-[#201b16] border border-[#352d26] hover:border-[#c69255]/40 transition-all group"
+            <p className="text-base sm:text-lg text-gray-300 font-bold leading-relaxed">
+              {highlights.subtitle[language]}
+            </p>
+
+            <Link
+              href="/branches"
+              className="inline-flex items-center justify-center rounded-full bg-[#b57a38] px-6 py-3 text-sm sm:text-base font-semibold text-white transition-all hover:bg-[#9e672b] hover:shadow-[0_4px_20px_rgba(181,122,56,0.35)]"
             >
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#c69255] mb-6 group-hover:scale-110 transition-transform">
-                {renderIcon(item.icon)}
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">
-                {item.title[language]}
-              </h3>
-              <p className="text-xs text-[#c5b8ae] leading-relaxed">
-                {item.description[language]}
-              </p>
-            </div>
-          ))}
+              ค้นหาสาขาใกล้คุณ
+            </Link>
+          </div>
+
+          {/* Right Column: StackCardGroup with GPOS Stacking Cards on Scroll */}
+          <StackCardGroup
+            step={step}
+            className="flex flex-1 flex-col gap-12 lg:gap-24 w-full pb-12 lg:pb-24"
+          >
+            {highlights.items.map((item, index) => {
+              const cardTop = baseTop + index * step;
+
+              return (
+                <StackCard key={index} index={index} top={cardTop}>
+                  <HighlightCard item={item} language={language} />
+                </StackCard>
+              );
+            })}
+          </StackCardGroup>
+
         </div>
       </div>
     </section>

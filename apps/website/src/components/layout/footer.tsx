@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Coffee, ArrowUp, MessageCircle, AlertCircle, X } from "lucide-react";
+import { ArrowUp, MessageCircle, AlertCircle, X } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { LAYOUT_DATA } from "@/data/layout";
 
@@ -29,15 +30,18 @@ export function Footer() {
           {/* Column 1 & 2: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c69255] to-[#8f6040] flex items-center justify-center text-stone-950 font-bold">
-                <Coffee className="w-5 h-5 text-stone-950" />
+              <div className="relative w-11 h-11 rounded-2xl overflow-hidden bg-[#201b16] border border-[#352d26] flex items-center justify-center p-0.5">
+                <Image
+                  src="/logo/superblackcoffee-logo.webp"
+                  alt="Super Black Coffee Logo"
+                  width={44}
+                  height={44}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <div>
                 <span className="text-xl font-black tracking-wider text-white">
                   {brand.name}
-                </span>
-                <span className="text-[10px] text-[#bf9576] tracking-widest uppercase block -mt-1 font-mono font-semibold">
-                  {brand.subtitle[language]}
                 </span>
               </div>
             </Link>
@@ -77,15 +81,15 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs text-[#9e9187]">
               <li>
-                <span className="block text-white font-medium">Headquarters Contact</span>
+                <span className="block text-white font-bold">Headquarters Contact</span>
                 <span className="text-[11px] font-mono">{footer.contactEmail}</span>
               </li>
               <li>
-                <span className="block text-white font-medium">Franchise Desk</span>
+                <span className="block text-white font-bold">Franchise Desk</span>
                 <span className="text-[11px] font-mono">{footer.franchiseEmail}</span>
               </li>
               <li className="pt-2">
-                <span className="block text-white font-medium">{footer.hoursTitle[language]}</span>
+                <span className="block text-white font-bold">{footer.hoursTitle[language]}</span>
                 <span className="text-[11px]">{footer.hoursDetail[language]}</span>
               </li>
             </ul>
@@ -126,7 +130,7 @@ export function Footer() {
             <button
               type="button"
               onClick={scrollToTop}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#201b16] border border-[#352d26] text-xs font-medium text-[#c5b8ae] hover:text-white hover:border-[#c69255] transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#201b16] border border-[#352d26] text-xs font-bold text-[#c5b8ae] hover:text-white hover:border-[#c69255] transition-colors"
             >
               <ArrowUp className="w-3.5 h-3.5 text-[#c69255]" />
               <span>{footer.backToTop[language]}</span>

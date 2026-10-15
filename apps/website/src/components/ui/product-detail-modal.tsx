@@ -82,7 +82,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
               )}
               {tastingNotes.length > 0 && (
                 <div className="flex items-center gap-2 flex-wrap text-xs">
-                  <span className="text-[#9e9187] font-medium">Notes:</span>
+                  <span className="text-[#9e9187] font-bold">Notes:</span>
                   {tastingNotes.map((note, i) => (
                     <span
                       key={i}
@@ -133,7 +133,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                     key={level}
                     type="button"
                     onClick={() => setSelectedSweetness(level)}
-                    className={`py-1.5 px-3 rounded-lg border text-xs font-medium transition-colors ${
+                    className={`py-1.5 px-3 rounded-lg border text-xs font-bold transition-colors ${
                       selectedSweetness === level
                         ? "border-[#c69255] bg-[#c69255]/10 text-[#c69255]"
                         : "border-[#352d26] bg-[#201b16] text-[#9e9187] hover:text-white"
@@ -158,7 +158,7 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                     key={bean}
                     type="button"
                     onClick={() => setSelectedBean(bean)}
-                    className={`py-1.5 px-3 rounded-lg border text-xs font-medium transition-colors ${
+                    className={`py-1.5 px-3 rounded-lg border text-xs font-bold transition-colors ${
                       selectedBean === bean
                         ? "border-[#c69255] bg-[#c69255]/10 text-[#c69255]"
                         : "border-[#352d26] bg-[#201b16] text-[#9e9187] hover:text-white"

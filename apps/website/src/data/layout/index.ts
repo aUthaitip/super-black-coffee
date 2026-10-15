@@ -1,10 +1,6 @@
 export const LAYOUT_DATA = {
   brand: {
-    name: "SUPER BLACK",
-    subtitle: {
-      th: "COFFEE ROASTER",
-      en: "COFFEE ROASTER",
-    },
+    name: "SUPER BLACK COFFEE",
     tagline: {
       th: "กาแฟดีในทุกจังหวะของคุณ",
       en: "Great Coffee, Every Moment.",
@@ -38,6 +34,10 @@ export const LAYOUT_DATA = {
       label: { th: "แฟรนไชส์", en: "Franchise" },
     },
     {
+      href: "/blog",
+      label: { th: "บทความ", en: "Blog" },
+    },
+    {
       href: "/contact",
       label: { th: "ติดต่อเรา", en: "Contact" },
     },
@@ -45,7 +45,7 @@ export const LAYOUT_DATA = {
 
   portalLink: {
     href: "/franchise-portal",
-    label: { th: "ระบบแฟรนไชส์", en: "Franchise Portal" },
+    label: { th: "เข้าสู่ระบบ", en: "Sign In" },
   },
 
   findBranchButton: {
