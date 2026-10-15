@@ -25,6 +25,7 @@ export function HeroSection() {
         {/* Soft directional gradient: dark on left for text legibility, transparent on right to see the cafe scene */}
         <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/40 to-black/20" />
         <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/60 to-black pointer-events-none" />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24">

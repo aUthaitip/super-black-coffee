@@ -12,7 +12,7 @@ export function FinalCtaSection() {
   const { finalCta } = HOME_DATA;
 
   return (
-    <section className="py-28 bg-black relative overflow-hidden border-t border-[#352d26]">
+    <section className="relative z-0 -mt-16 sm:-mt-24 pt-36 sm:pt-48 pb-28 bg-black overflow-hidden">
       {/* Background Coffee Image with Gradient Vignette */}
       {finalCta.bgImage && (
         <div className="absolute inset-0 z-0">
@@ -20,11 +20,10 @@ export function FinalCtaSection() {
             src={finalCta.bgImage}
             alt="Super Black Coffee Background"
             fill
-            className="object-cover opacity-40 scale-105 hover:scale-100 transition-transform duration-1000"
+            className="object-cover opacity-70 scale-105 hover:scale-100 transition-transform duration-1000"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/50" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/60 to-black" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/60 to-black pointer-events-none" />
         </div>
       )}
 

@@ -1,21 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { Product } from "@/types";
-import { ProductDetailModal } from "@/components/ui/product-detail-modal";
+import React from "react";
+import { SeasonalPopupDialog } from "@/components/ui/seasonal-popup-dialog";
 import {
   HeroSection,
   HighlightsSection,
-  SignatureMenuSection,
+  BranchPromotionsSection,
   BrandStorySection,
-  FranchiseTeaserSection,
-  BranchTeaserSection,
   FinalCtaSection,
 } from "./index";
 
 export function HomePageContent() {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
   return (
     <div className="bg-black text-white selection:bg-[#c69255] selection:text-stone-950">
       {/* Section A: Cinematic Hero */}
@@ -24,26 +19,18 @@ export function HomePageContent() {
       {/* Section B: Brand Highlights */}
       <HighlightsSection />
 
-      {/* Section C: Signature Menu Showcase */}
-      <SignatureMenuSection onSelectProduct={(p) => setSelectedProduct(p)} />
+      {/* Section C: Exclusive Branch Promotions (เลือกสิทธิ์พิเศษใกล้คุณ) */}
+      <BranchPromotionsSection />
 
       {/* Section D: Brand Story */}
       <BrandStorySection />
 
-      {/* Section E: Franchise Opportunities Preview */}
-      <FranchiseTeaserSection />
-
-      {/* Section F: Branch Locator Teaser */}
-      <BranchTeaserSection />
-
-      {/* Section G: Final Editorial CTA */}
+      {/* Section E: Final Editorial CTA */}
       <FinalCtaSection />
 
-      {/* Product Detail Modal */}
-      <ProductDetailModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-      />
+      {/* Festival & Seasonal Popup Dialog */}
+      <SeasonalPopupDialog />
     </div>
   );
 }
+

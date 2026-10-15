@@ -12,7 +12,7 @@ export function BrandStorySection() {
   const { story } = HOME_DATA;
 
   return (
-    <section className="py-24 bg-[#171411] border-b border-[#352d26] overflow-hidden">
+    <section className="relative z-10 rounded-4xl py-24 bg-[#171411] border-b border-[#352d26] overflow-hidden shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Story Image */}
