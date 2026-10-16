@@ -21,8 +21,8 @@ export function HomePageContent() {
       {/* Section B: Brand Highlights */}
       <HighlightsSection />
 
-      {/* Section C: Brand Story (เรื่องราวเบื้องหลังความเข้ม) */}
-      <BrandStorySection />
+      {/* Section C: Brand Story (เรื่องราวเบื้องหลังความเข้ม) - ซ่อนไว้ชั่วคราว */}
+      {/* <BrandStorySection /> */}
 
       {/* Section D: Exclusive Branch Promotions (เลือกสิทธิ์พิเศษใกล้คุณ) */}
       <BranchPromotionsSection />

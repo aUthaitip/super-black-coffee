@@ -6,3 +6,4 @@ export * from "./branches";
 export * from "./franchise";
 export * from "./faq";
 export * from "./contact";
+export * from "./about";

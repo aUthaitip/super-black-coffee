@@ -12,7 +12,7 @@ export const translations = {
       about: "เกี่ยวกับเรา",
       menu: "เมนู",
       branches: "สาขา",
-      franchise: "แฟรนไชส์",
+      franchise: "ร่วมธุรกิจ",
       contact: "ติดต่อเรา",
       findBranch: "ค้นหาสาขา",
       franchisePortal: "ระบบแฟรนไชส์",

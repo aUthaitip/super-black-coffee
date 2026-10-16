@@ -33,12 +33,7 @@ export function Navbar() {
 
   return (
     <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 px-4 sm:px-6 lg:px-8",
-        isScrolled
-          ? "bg-[#0c0a09]/85 backdrop-blur-md border-b border-[#352d26]/80 shadow-lg shadow-black/40"
-          : "bg-transparent"
-      )}
+      className="sticky top-0 z-40 w-full transition-all duration-300 px-4 sm:px-6 lg:px-8 bg-transparent"
     >
       <div className="flex h-16 w-full flex-row items-center justify-between container mx-auto">
           <div>
@@ -50,7 +45,59 @@ export function Navbar() {
         {/* Center Navigation Links (Desktop) */}
         <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const hasChildren = "children" in link && Boolean(link.children?.length);
+            const isActive =
+              pathname === link.href ||
+              (hasChildren && link.children?.some((child) => pathname === child.href));
+
+            if (hasChildren && link.children) {
+              return (
+                <div key={link.href} className="relative group py-2">
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "text-sm tracking-wide transition-all relative py-1 px-2 rounded-lg font-medium text-white flex items-center gap-1.5",
+                      isActive
+                        ? "text-[#c69255] font-semibold"
+                        : "group-hover:text-[#c69255]"
+                    )}
+                  >
+                    <span>{link.label[language]}</span>
+                    <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 opacity-80" />
+                    {isActive && (
+                      <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#c69255] rounded-full" />
+                    )}
+                  </Link>
+
+                  {/* Dropdown Menu */}
+                  <div className="absolute left-0 top-full pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 ease-out z-50 min-w-[220px]">
+                    <div className="bg-white rounded-2xl shadow-2xl p-2 flex flex-col gap-1 ring-1 ring-black/5">
+                      {link.children.map((child) => {
+                        const isChildActive = pathname === child.href;
+                        return (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            className={cn(
+                              "text-xs sm:text-sm font-medium px-3.5 py-2.5 rounded-xl transition-all duration-150 flex items-center justify-between",
+                              isChildActive
+                                ? "bg-[#c69255] text-white font-semibold"
+                                : "text-black hover:bg-[#c69255] hover:text-white"
+                            )}
+                          >
+                            <span>{child.label[language]}</span>
+                            {isChildActive && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.href}
@@ -110,7 +157,42 @@ export function Navbar() {
         <div className="lg:hidden mx-auto mt-2 bg-[#171411]/95 backdrop-blur-xl border border-[#352d26] rounded-2xl shadow-2xl p-5 transition-all animate-in slide-in-from-top-2">
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const hasChildren = "children" in link && Boolean(link.children?.length);
+              const isActive =
+                pathname === link.href ||
+                (hasChildren && link.children?.some((child) => pathname === child.href));
+
+              if (hasChildren && link.children) {
+                return (
+                  <div key={link.href} className="flex flex-col gap-1">
+                    <div className="text-xs uppercase font-semibold text-stone-400 tracking-wider px-3 pt-2">
+                      {link.label[language]}
+                    </div>
+                    <div className="pl-2 flex flex-col gap-1">
+                      {link.children.map((child) => {
+                        const isChildActive = pathname === child.href;
+                        return (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={cn(
+                              "text-sm font-medium py-2 px-3 rounded-xl transition-colors flex items-center justify-between",
+                              isChildActive
+                                ? "bg-[#28221c] text-[#c69255] font-semibold border border-[#352d26]"
+                                : "text-[#c5b8ae] hover:bg-[#201b16] hover:text-white"
+                            )}
+                          >
+                            <span>{child.label[language]}</span>
+                            {isChildActive && <span className="w-1.5 h-1.5 rounded-full bg-[#c69255]" />}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.href}

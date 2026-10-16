@@ -84,7 +84,7 @@ export function HeroSection() {
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 46vw"
-            className="object-cover object-center scale-105 transform hover:scale-100 transition-transform duration-1000 brightness-95"
+            className="object-cover object-[75%_center] scale-105 transform hover:scale-100 transition-transform duration-1000 brightness-95"
           />
 
           {/* Smooth blend gradients: Left soft dark fade into canvas, bottom gradient */}
@@ -140,7 +140,7 @@ export function HeroSection() {
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               href="/menu"
-              className="px-7 py-3.5 rounded-full bg-[#c69255] hover:bg-[#d8a162] text-stone-950 font-semibold text-sm sm:text-base tracking-wide transition-all shadow-lg shadow-[#c69255]/20 flex items-center gap-2 group active:scale-95"
+              className="px-7 py-3.5 rounded-full bg-[#c69255] hover:bg-[#d8a162] text-stone-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#c69255]/20 flex items-center gap-2 group active:scale-95"
             >
               <span>{hero.exploreMenuText[language]}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -148,7 +148,7 @@ export function HeroSection() {
 
             <Link
               href="/branches"
-              className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white font-medium text-sm sm:text-base tracking-wide backdrop-blur-md transition-all flex items-center gap-2 active:scale-95"
+              className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold text-sm tracking-wide backdrop-blur-md transition-all flex items-center gap-2 active:scale-95"
             >
               <MapPin className="w-4 h-4 text-[#c69255]" />
               <span>{hero.findBranchText[language]}</span>

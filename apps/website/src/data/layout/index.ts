@@ -17,21 +17,27 @@ export const LAYOUT_DATA = {
       href: "/",
       label: { th: "หน้าหลัก", en: "Home" },
     },
-    {
-      href: "/about",
-      label: { th: "เกี่ยวกับเรา", en: "About" },
-    },
+    // {
+    //   href: "/about",
+    //   label: { th: "เกี่ยวกับเรา", en: "About" },
+    // },
     {
       href: "/menu",
       label: { th: "เมนู", en: "Menu" },
     },
     {
-      href: "/branches",
-      label: { th: "สาขา", en: "Branches" },
-    },
-    {
       href: "/franchise",
-      label: { th: "แฟรนไชส์", en: "Franchise" },
+      label: { th: "ร่วมธุรกิจ", en: "Partnership" },
+      children: [
+        {
+          href: "/franchise",
+          label: { th: "สนใจร่วมธุรกิจเฟรนไช", en: "Franchise Opportunity" },
+        },
+        {
+          href: "/branches",
+          label: { th: "สาขาที่เปิดทำการ", en: "Active Branches" },
+        },
+      ],
     },
     {
       href: "/blog",
