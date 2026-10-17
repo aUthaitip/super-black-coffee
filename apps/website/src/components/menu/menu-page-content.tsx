@@ -38,7 +38,7 @@ export function MenuPageContent({ initialItems = [] }: MenuPageContentProps) {
       },
       price: item.price,
       category: item.category as MenuItem["category"],
-      image: item.image || "/menu/catalog/เมน-ชา-ชาพช.webp",
+      image: item.image || "/coffee/coffee-espresso.webp",
       isPopular: item.isPopular,
     }));
   }, [initialItems]);
