@@ -3,10 +3,10 @@
 import React from "react";
 import { SeasonalPopupDialog } from "@/components/ui/seasonal-popup-dialog";
 import {
+  GardenCoffeeIntroVideo,
   HeroSection,
+  SignatureStorySection,
   HighlightsSection,
-  BranchPromotionsSection,
-  BrandStorySection,
   FinalCtaSection,
   FaqSection,
   ContactFormSection,
@@ -14,18 +14,18 @@ import {
 
 export function HomePageContent() {
   return (
-    <div className="bg-black text-white selection:bg-[#c69255] selection:text-stone-950">
+    <div className="bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white selection:bg-[#c69255] selection:text-white transition-colors duration-300">
+      {/* Opening Intro Video Screen: Plays continuously until user scrolls */}
+      <GardenCoffeeIntroVideo />
+
       {/* Section A: Cinematic Hero */}
       <HeroSection />
 
+      {/* Section A2: Our Signature Story (มากกว่าความเข้ม คือคุณภาพที่สัมผัสได้) */}
+      <SignatureStorySection />
+
       {/* Section B: Brand Highlights */}
       <HighlightsSection />
-
-      {/* Section C: Brand Story (เรื่องราวเบื้องหลังความเข้ม) - ซ่อนไว้ชั่วคราว */}
-      {/* <BrandStorySection /> */}
-
-      {/* Section D: Exclusive Branch Promotions (เลือกสิทธิ์พิเศษใกล้คุณ) */}
-      <BranchPromotionsSection />
 
       {/* Section E: Frequently Asked Questions (FAQ) */}
       <FaqSection />
@@ -33,7 +33,7 @@ export function HomePageContent() {
       {/* Section F: Contact Form Section */}
       <ContactFormSection />
 
-      {/* Section G: Final Editorial CTA (สัมผัสความเข้มลึกที่แท้จริงได้แล้ววันนี้ - ล่างสุดก่อน Footer) */}
+      {/* Section G: Final Editorial CTA (Experience True Roast Intensity Today) */}
       <FinalCtaSection />
 
       {/* Festival & Seasonal Popup Dialog */}
@@ -41,4 +41,3 @@ export function HomePageContent() {
     </div>
   );
 }
-

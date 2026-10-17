@@ -41,10 +41,10 @@ export const LAYOUT_DATA = {
     },
     {
       href: "/blog",
-      label: { th: "บทความ", en: "Blog" },
+      label: { th: "บทความและข่าวสาร", en: "Blog & News" },
     },
     {
-      href: "/contact",
+      href: "/#contact",
       label: { th: "ติดต่อเรา", en: "Contact" },
     },
   ],

@@ -6,22 +6,24 @@ import Link from "next/link";
 import { X } from "lucide-react";
 
 export function SeasonalPopupDialog({
-  imageSrc = "/hero/superblackcoffee-brand-hero.webp",
-  href = "/menu",
+  imageSrc = "/dialog/ปิยะ.webp",
+  href = "/franchise",
+  delayMs = 800,
 }: {
   imageSrc?: string;
   href?: string;
+  delayMs?: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Show dialog after slight delay on initial load
+    // Show dialog after specified delay on initial load
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 500);
+    }, delayMs);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [delayMs]);
 
   // Close on Escape key
   useEffect(() => {

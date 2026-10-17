@@ -20,12 +20,12 @@ export const HOME_DATA = {
       en: "Carefully selected single-origin beans grown in high-altitude soil, roasted with second-precision heat control to unlock rich dark chocolate, caramel notes, and an uncompromising body.",
     },
     exploreMenuText: {
-      th: "ค้นหาเมนู",
-      en: "Explore Our Menu",
+      th: "สนใจธุรกิจ",
+      en: "Business Interest",
     },
     findBranchText: {
-      th: "ค้นหาสาขา",
-      en: "Find a Branch",
+      th: "ร่วมธุรกิจ",
+      en: "Franchise Partnership",
     },
     metrics: [
       {

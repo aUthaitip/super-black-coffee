@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useLanguage } from "@/i18n/language-provider";
 import { HOME_DATA } from "@/data/home";
 import { HighlightCard } from "@/components/card";
+import { ScrollReveal, ScrollRevealText } from "@/components/ui/scroll-reveal";
 
 // GPOS StackCard component with stuck observer
 function StackCard({
@@ -117,30 +118,37 @@ export function HighlightsSection() {
   const { language } = useLanguage();
   const { highlights } = HOME_DATA;
 
+  // Stacking offset values
   const baseTop = 110;
   const step = 20;
 
   return (
-    <section className="w-full bg-black text-white relative my-2">
+    <section className="w-full bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white relative my-2 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
           
           {/* Left Sticky Column */}
           <div className="flex shrink-0 flex-col items-start gap-6 lg:sticky lg:top-28 lg:max-w-md lg:self-start">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.2]">
-              {highlights.title[language]}
-            </h2>
+            <ScrollRevealText delay={0.05} yOffset={24}>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-stone-900 dark:text-white tracking-tight leading-[1.2]">
+                {highlights.title[language]}
+              </h2>
+            </ScrollRevealText>
 
-            <p className="text-base sm:text-lg text-gray-300 font-bold leading-relaxed">
-              {highlights.subtitle[language]}
-            </p>
+            <ScrollRevealText delay={0.15} yOffset={20}>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-gray-300 font-medium leading-relaxed">
+                {highlights.subtitle[language]}
+              </p>
+            </ScrollRevealText>
 
-            <Link
-              href="/branches"
-              className="inline-flex items-center justify-center rounded-full bg-[#b57a38] px-6 py-3 text-sm sm:text-base font-semibold text-white transition-all hover:bg-[#9e672b] hover:shadow-[0_4px_20px_rgba(181,122,56,0.35)]"
-            >
-              ค้นหาสาขาใกล้คุณ
-            </Link>
+            <ScrollReveal delay={0.25} yOffset={20}>
+              <Link
+                href="/#contact"
+                className="inline-flex items-center justify-center rounded-full bg-[#b57a38] px-6 py-3 text-sm sm:text-base font-bold text-white transition-all hover:bg-[#9e672b] hover:shadow-[0_4px_20px_rgba(181,122,56,0.35)] shadow-md"
+              >
+                {language === "th" ? "สนใจร่วมธุรกิจ" : "Become a Partner"}
+              </Link>
+            </ScrollReveal>
           </div>
 
           {/* Right Column: StackCardGroup with GPOS Stacking Cards on Scroll */}
@@ -153,7 +161,7 @@ export function HighlightsSection() {
 
               return (
                 <StackCard key={index} index={index} top={cardTop}>
-                  <HighlightCard item={item} language={language} />
+                  <HighlightCard item={item} language={language} index={index} />
                 </StackCard>
               );
             })}

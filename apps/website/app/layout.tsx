@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Prompt, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n/language-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 const promptFont = Prompt({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -33,13 +36,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className="dark scroll-smooth">
-      <body className={`${promptFont.variable} ${geistSans.variable} ${geistMono.variable} bg-black text-[#fbfaf8] antialiased min-h-screen flex flex-col font-prompt`}>
-        <LanguageProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </LanguageProvider>
+    <html lang="th" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var theme = localStorage.getItem('superblack-theme');
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${promptFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col font-prompt selection:bg-[#c69255] selection:text-white`}>
+        <ThemeProvider>
+          <LanguageProvider>
+            <SmoothScrollProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <ScrollToTop />
+            </SmoothScrollProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

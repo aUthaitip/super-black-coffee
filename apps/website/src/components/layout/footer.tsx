@@ -20,7 +20,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative z-10 bg-black text-[#a1a1aa] pt-26 pb-12">
+    <footer className="relative z-10 bg-[#f7f4ee] dark:bg-black text-stone-600 dark:text-[#a1a1aa] border-t border-stone-200 dark:border-white/10 pt-24 pb-12 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Grid: Brand (Left) | Menu (Center) | Contact (Right) */}
@@ -38,54 +38,54 @@ export function Footer() {
                   className="object-contain w-full h-full"
                 />
               </div>
-              <span className="text-xl font-black tracking-wider text-white">
+              <span className="text-xl font-black tracking-wider text-stone-950 dark:text-white">
                 {brand.name}
               </span>
             </Link>
 
-            <p className="text-sm text-[#71717a] leading-relaxed max-w-md font-normal">
+            <p className="text-sm text-stone-600 dark:text-[#71717a] leading-relaxed max-w-md font-normal">
               {brand.description[language]}
             </p>
           </div>
 
           {/* Column 2: Navigation Links (เมนู) */}
           <div className="md:col-span-3 lg:col-span-3 text-left">
-            <h4 className="text-sm font-medium text-white mb-5">
+            <h4 className="text-sm font-bold text-stone-950 dark:text-white mb-5">
               {language === "th" ? "เมนู" : "Menu"}
             </h4>
             <ul className="space-y-3.5 text-sm">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
+                <Link href="/" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "หน้าแรก" : "Home"}
                 </Link>
               </li>
               <li>
-                <Link href="/menu" className="hover:text-white transition-colors">
+                <Link href="/menu" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "เมนูเครื่องดื่ม" : "Drink Menu"}
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white transition-colors">
+                <Link href="/about" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "เกี่ยวกับเรา" : "About Us"}
                 </Link>
               </li>
               <li>
-                <Link href="/branches" className="hover:text-white transition-colors">
+                <Link href="/branches" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "ค้นหาสาขา" : "Find Branches"}
                 </Link>
               </li>
               <li>
-                <Link href="/franchise" className="hover:text-white transition-colors">
+                <Link href="/franchise" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "แพ็กเกจแฟรนไชส์" : "Franchise"}
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
+                <Link href="/contact" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "ติดต่อเรา" : "Contact Us"}
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-white transition-colors">
+                <Link href="/privacy" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   {language === "th" ? "ความเป็นส่วนตัว" : "Privacy Policy"}
                 </Link>
               </li>
@@ -94,7 +94,7 @@ export function Footer() {
 
           {/* Column 3: Contact & Channels (ติดต่อ) */}
           <div className="md:col-span-3 lg:col-span-3 text-left">
-            <h4 className="text-sm font-medium text-white mb-5">
+            <h4 className="text-sm font-bold text-stone-950 dark:text-white mb-5">
               {language === "th" ? "ติดต่อ" : "Contact"}
             </h4>
             <ul className="space-y-4 text-sm">
@@ -102,10 +102,10 @@ export function Footer() {
               <li>
                 <a
                   href="tel:021148678"
-                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors"
+                  className="flex items-center gap-3 group text-stone-700 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
-                    <Phone className="w-4 h-4 text-white" />
+                  <div className="w-8 h-8 rounded-full border border-stone-300 dark:border-white/20 bg-white dark:bg-transparent flex items-center justify-center shrink-0 group-hover:border-[#c69255] transition-colors shadow-xs">
+                    <Phone className="w-4 h-4 text-stone-800 dark:text-white group-hover:text-[#c69255]" />
                   </div>
                   <span className="font-normal font-mono">02-888-9999</span>
                 </a>
@@ -115,10 +115,10 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:contact@superblackcoffee.com"
-                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors"
+                  className="flex items-center gap-3 group text-stone-700 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
-                    <Mail className="w-4 h-4 text-white" />
+                  <div className="w-8 h-8 rounded-full border border-stone-300 dark:border-white/20 bg-white dark:bg-transparent flex items-center justify-center shrink-0 group-hover:border-[#c69255] transition-colors shadow-xs">
+                    <Mail className="w-4 h-4 text-stone-800 dark:text-white group-hover:text-[#c69255]" />
                   </div>
                   <span className="font-normal font-mono">contact@superblackcoffee.com</span>
                 </a>
@@ -129,10 +129,10 @@ export function Footer() {
                 <button
                   type="button"
                   onClick={() => handleSocialClick("LINE Official")}
-                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors cursor-pointer"
+                  className="flex items-center gap-3 group text-stone-700 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
-                    <MessageCircle className="w-4 h-4 text-white" />
+                  <div className="w-8 h-8 rounded-full border border-stone-300 dark:border-white/20 bg-white dark:bg-transparent flex items-center justify-center shrink-0 group-hover:border-[#c69255] transition-colors shadow-xs">
+                    <MessageCircle className="w-4 h-4 text-stone-800 dark:text-white group-hover:text-[#c69255]" />
                   </div>
                   <span className="font-normal font-mono">@superblackcoffee</span>
                 </button>
@@ -143,10 +143,10 @@ export function Footer() {
                 <button
                   type="button"
                   onClick={() => handleSocialClick("Facebook")}
-                  className="flex items-center gap-3 group text-[#a1a1aa] hover:text-white transition-colors cursor-pointer"
+                  className="flex items-center gap-3 group text-stone-700 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white transition-colors">
-                    <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-full border border-stone-300 dark:border-white/20 bg-white dark:bg-transparent flex items-center justify-center shrink-0 group-hover:border-[#c69255] transition-colors shadow-xs">
+                    <svg className="w-4 h-4 text-stone-800 dark:text-white fill-current group-hover:text-[#c69255]" viewBox="0 0 24 24">
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                     </svg>
                   </div>
@@ -158,21 +158,21 @@ export function Footer() {
 
         </div>
 
-        {/* Thin Divider Line matching screenshot */}
-        <div className="border-t border-white/10" />
+        {/* Thin Divider Line */}
+        <div className="border-t border-stone-200 dark:border-white/10" />
 
         {/* Bottom Bar: Copyright & Language Selector */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#71717a]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 dark:text-[#71717a]">
           <div>
             <span>© 2026 SUPER BLACK COFFEE สงวนลิขสิทธิ์</span>
           </div>
 
-          {/* Minimalist Globe Language Selector matching screenshot */}
+          {/* Minimalist Globe Language Selector */}
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setLanguage(language === "th" ? "en" : "th")}
-              className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#a1a1aa] hover:text-white transition-colors cursor-pointer px-2 py-1 rounded-md hover:bg-white/5"
+              className="inline-flex items-center gap-2 text-xs font-mono uppercase text-stone-600 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors cursor-pointer px-2 py-1 rounded-md hover:bg-stone-200/60 dark:hover:bg-white/5"
             >
               <Globe className="w-4 h-4" />
               <span>{language.toUpperCase()}</span>
@@ -186,11 +186,11 @@ export function Footer() {
       {/* Social Media Explanatory Dialog */}
       {socialModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[#201b16] border border-[#352d26] rounded-2xl max-w-md w-full p-6 text-left shadow-2xl relative">
+          <div className="bg-white dark:bg-[#201b16] border border-stone-200 dark:border-[#352d26] rounded-2xl max-w-md w-full p-6 text-left shadow-2xl relative text-stone-900 dark:text-white">
             <button
               type="button"
               onClick={() => setSocialModalOpen(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-lg bg-[#28221c] text-[#9e9187] hover:text-white"
+              className="absolute top-4 right-4 p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 dark:bg-[#28221c] text-stone-600 dark:text-[#9e9187] hover:text-stone-950 dark:hover:text-white cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -199,19 +199,19 @@ export function Footer() {
                 <AlertCircle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">
+                <h3 className="text-base font-bold text-stone-950 dark:text-white">
                   {activeSocial} Official Channel
                 </h3>
-                <span className="text-xs text-[#9e9187]">Demo Notification</span>
+                <span className="text-xs text-stone-500 dark:text-[#9e9187]">Demo Notification</span>
               </div>
             </div>
-            <p className="text-xs text-[#c5b8ae] leading-relaxed mb-6">
+            <p className="text-xs text-stone-600 dark:text-[#c5b8ae] leading-relaxed mb-6">
               ช่องทางโซเชียลมีเดียนี้จัดทำขึ้นเพื่อการสาธิตระบบ UI ของ Super Black Coffee เว็บไซต์นี้ไม่ได้เชื่อมต่อกับบัญชีโซเชียลมีเดียจริงของบริษัทภายนอก
             </p>
             <button
               type="button"
               onClick={() => setSocialModalOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-[#c69255] hover:bg-[#d8a162] text-stone-950 font-bold text-xs transition-colors"
+              className="w-full py-2.5 rounded-xl bg-stone-900 hover:bg-[#c69255] text-white hover:text-stone-950 dark:bg-[#c69255] dark:hover:bg-[#d8a162] dark:text-stone-950 font-bold text-xs transition-colors cursor-pointer"
             >
               เข้าใจแล้ว (Close)
             </button>

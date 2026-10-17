@@ -55,6 +55,11 @@ export interface Branch {
   phone: string;
   googleMapsUrl?: string;
   isOpenNow?: boolean;
+  is24Hours?: boolean;
+  highlightTagTh?: string;
+  highlightTagEn?: string;
+  hasPromotions?: boolean;
+  promotionsCount?: number;
 }
 
 export interface FranchisePackage {
@@ -62,14 +67,23 @@ export interface FranchisePackage {
   tier: "S" | "M" | "L";
   nameTh: string;
   nameEn: string;
+  taglineTh?: string;
+  taglineEn?: string;
   descriptionTh: string;
   descriptionEn: string;
   illustrativeInvestmentTh: string;
   illustrativeInvestmentEn: string;
+  franchiseFeeTh?: string;
+  franchiseFeeEn?: string;
   sizeTh: string;
   sizeEn: string;
+  evStations?: number;
+  image?: string;
+  planImage?: string;
   recommendedForTh: string;
   recommendedForEn: string;
+  targetLocationsTh?: string[];
+  targetLocationsEn?: string[];
   includedFeaturesTh: string[];
   includedFeaturesEn: string[];
   popular?: boolean;
