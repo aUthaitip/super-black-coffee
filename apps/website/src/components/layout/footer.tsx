@@ -3,14 +3,20 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Phone, Mail, MessageCircle, Globe, ChevronDown, AlertCircle, X } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { LAYOUT_DATA } from "@/data/layout";
 
 export function Footer() {
+  const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
   const [socialModalOpen, setSocialModalOpen] = useState(false);
   const [activeSocial, setActiveSocial] = useState<string>("");
+
+  if (pathname?.startsWith("/studio")) {
+    return null;
+  }
 
   const { brand, navLinks } = LAYOUT_DATA;
 

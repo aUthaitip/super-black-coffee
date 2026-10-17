@@ -5,16 +5,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 
+interface SanityPromotion {
+  _id: string;
+  titleTh?: string;
+  titleEn?: string;
+  bannerImage: string;
+  isPopup?: boolean;
+  linkUrl?: string;
+}
+
 export function SeasonalPopupDialog({
-  imageSrc = "/dialog/ปิยะ.webp",
-  href = "/franchise",
+  imageSrc,
+  href,
   delayMs = 800,
+  initialPromotions,
 }: {
   imageSrc?: string;
   href?: string;
   delayMs?: number;
+  initialPromotions?: SanityPromotion[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // If promotions passed from Sanity, find the first active popup
+  const activeSanityPopup = initialPromotions?.find((p) => p.isPopup && p.bannerImage);
+  const finalImage = activeSanityPopup?.bannerImage || imageSrc;
+  const finalHref = activeSanityPopup?.linkUrl || href || "/franchise";
 
   useEffect(() => {
     // Show dialog after specified delay on initial load
@@ -36,18 +52,18 @@ export function SeasonalPopupDialog({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  if (!isOpen) return null;
+  if (!isOpen || !finalImage) return null;
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
     >
       {/* Dark Dim Backdrop */}
       <div
         onClick={() => setIsOpen(false)}
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
       />
 
       {/* Dialog Container */}
@@ -63,9 +79,9 @@ export function SeasonalPopupDialog({
 
         {/* Banner Image Frame with Warm Gold/Orange Border */}
         <div className="relative w-full aspect-video sm:aspect-video overflow-hidden border border-amber-100">
-          <Link href={href} onClick={() => setIsOpen(false)} className="block w-full h-full relative cursor-pointer">
+          <Link href={finalHref} onClick={() => setIsOpen(false)} className="block w-full h-full relative cursor-pointer">
             <Image
-              src={imageSrc}
+              src={finalImage}
               alt="Promotion & Festival Announcement"
               fill
               priority

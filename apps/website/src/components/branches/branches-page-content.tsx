@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { 
-  MOCK_BRANCHES, 
   BRANCH_REGIONS, 
 } from "@/data/branches";
 import { Branch } from "@/types";
@@ -16,7 +15,25 @@ import { BranchCard } from "./branch-card";
 import { BranchDetailModal } from "./branch-detail-modal";
 import { cn } from "@/lib/utils";
 
-export function BranchesPageContent() {
+interface SanityBranch {
+  _id: string;
+  nameTh: string;
+  nameEn: string;
+  slug: string;
+  addressTh?: string;
+  addressEn?: string;
+  openingHours?: string;
+  phone?: string;
+  mapUrl?: string;
+  image?: string;
+  features?: string[];
+}
+
+interface BranchesPageContentProps {
+  initialBranches?: SanityBranch[];
+}
+
+export function BranchesPageContent({ initialBranches = [] }: BranchesPageContentProps) {
   const { language } = useLanguage();
   
   // Search & Filter State
@@ -26,6 +43,29 @@ export function BranchesPageContent() {
   // Modal State
   const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [modalTab, setModalTab] = useState<"info" | "promotions">("info");
+
+  // Normalize Sanity branches (No mock data fallback)
+  const branches: Branch[] = useMemo(() => {
+    return initialBranches.map((b) => ({
+      id: b._id,
+      slug: b.slug || b._id,
+      nameTh: b.nameTh,
+      nameEn: b.nameEn || b.nameTh,
+      addressTh: b.addressTh || "",
+      addressEn: b.addressEn || b.addressTh || "",
+      provinceTh: "",
+      provinceEn: "",
+      region: "central",
+      latitude: 0,
+      longitude: 0,
+      openingHoursTh: b.openingHours || "06:30 - 20:00 น.",
+      openingHoursEn: b.openingHours || "06:30 - 20:00",
+      amenities: (b.features || ["parking", "wifi", "seating"]) as Branch["amenities"],
+      image: b.image || "/branches/ayutthaya-ev-dusk.webp",
+      phone: b.phone || "",
+      googleMapsUrl: b.mapUrl || "",
+    }));
+  }, [initialBranches]);
 
   // Reset Filters
   const handleResetFilters = () => {
@@ -39,7 +79,7 @@ export function BranchesPageContent() {
 
   // Filter Logic
   const filteredBranches = useMemo(() => {
-    return MOCK_BRANCHES.filter((branch) => {
+    return branches.filter((branch) => {
       // Region filter
       if (selectedRegion !== "all" && branch.region !== selectedRegion) {
         return false;

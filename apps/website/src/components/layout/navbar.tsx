@@ -33,6 +33,10 @@ export function Navbar() {
 
   const { brand, navLinks, portalLink } = LAYOUT_DATA;
 
+  if (pathname?.startsWith("/studio")) {
+    return null;
+  }
+
   return (
     <header
       className={cn(

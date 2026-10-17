@@ -7,13 +7,55 @@ import { Clock, Eye, ArrowRight, Search, X } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
 import { BLOG_DATA, BlogPost } from "@/data/blog";
 
-export function BlogPageContent() {
+interface SanityPost {
+  _id: string;
+  titleTh?: string;
+  titleEn?: string;
+  title?: string;
+  slug: string;
+  excerptTh?: string;
+  excerptEn?: string;
+  excerpt?: string;
+  coverImage?: string;
+  category?: string;
+  publishedAt?: string;
+}
+
+interface BlogPageContentProps {
+  initialPosts?: SanityPost[];
+}
+
+export function BlogPageContent({ initialPosts = [] }: BlogPageContentProps) {
   const { language } = useLanguage();
-  const { header, posts, readMoreText, viewsText } = BLOG_DATA;
+  const { header, readMoreText, viewsText } = BLOG_DATA;
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const categories = [
+  const posts: BlogPost[] = useMemo(() => {
+    return initialPosts.map((p) => {
+      const titleTh = p.titleTh || p.title || "";
+      const titleEn = p.titleEn || titleTh;
+      const excerptTh = p.excerptTh || p.excerpt || "";
+      const excerptEn = p.excerptEn || excerptTh;
+      const categoryName = p.category || "บทความทั่วไป";
+
+      return {
+        id: p._id,
+        slug: p.slug,
+        title: { th: titleTh, en: titleEn },
+        excerpt: { th: excerptTh, en: excerptEn },
+        coverImage: p.coverImage || "/hero/branches-welcome.webp",
+        category: { th: categoryName, en: categoryName },
+        publishedAt: {
+          th: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("th-TH") : "เร็วๆ นี้",
+          en: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("en-US") : "Recent",
+        },
+        views: 0,
+      };
+    });
+  }, [initialPosts]);
+
+  const categories = useMemo(() => [
     { id: "all", label: { th: "ทั้งหมด", en: "All" } },
     ...Array.from(
       new Set(posts.map((p) => p.category.th))
@@ -27,7 +69,7 @@ export function BlogPageContent() {
         },
       };
     }),
-  ];
+  ], [posts]);
 
   const filteredPosts = useMemo(() => {
     return posts.filter((p) => {

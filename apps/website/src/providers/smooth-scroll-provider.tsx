@@ -41,14 +41,18 @@ export function SmoothScrollProvider({
     // Check for hash on initial load or after navigation
     const scrollToHash = () => {
       if (window.location.hash) {
-        const hashEl = document.querySelector(window.location.hash);
-        if (hashEl) {
-          setTimeout(() => {
-            lenis.scrollTo(hashEl as HTMLElement, {
-              offset: -70,
-              duration: 1.2,
-            });
-          }, 150);
+        try {
+          const hashEl = document.querySelector(window.location.hash);
+          if (hashEl) {
+            setTimeout(() => {
+              lenis.scrollTo(hashEl as HTMLElement, {
+                offset: -70,
+                duration: 1.2,
+              });
+            }, 150);
+          }
+        } catch {
+          // Ignore invalid CSS selector in hash (e.g. Sanity auth hash #sid=...)
         }
       }
     };
@@ -70,14 +74,18 @@ export function SmoothScrollProvider({
 
       if (isSamePageHomeHash) {
         const hash = rawHref.startsWith("/#") ? rawHref.slice(1) : rawHref;
-        const element = document.querySelector(hash);
-        if (element) {
-          e.preventDefault();
-          window.history.pushState(null, "", hash);
-          lenis.scrollTo(element as HTMLElement, {
-            offset: -70,
-            duration: 1.2,
-          });
+        try {
+          const element = document.querySelector(hash);
+          if (element) {
+            e.preventDefault();
+            window.history.pushState(null, "", hash);
+            lenis.scrollTo(element as HTMLElement, {
+              offset: -70,
+              duration: 1.2,
+            });
+          }
+        } catch {
+          // Ignore invalid selector
         }
       }
     };

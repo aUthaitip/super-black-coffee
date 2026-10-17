@@ -4,25 +4,54 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/i18n/language-provider";
-import { MENU_CATEGORIES, MENU_ITEMS, MenuItem } from "@/data/menu";
+import { MENU_CATEGORIES, MenuItem } from "@/data/menu";
 import { cn } from "@/lib/utils";
 
-export function MenuPageContent() {
+interface SanityMenuItem {
+  id: string;
+  nameTh: string;
+  nameEn: string;
+  price: number;
+  category: string;
+  image: string;
+  isPopular?: boolean;
+}
+
+interface MenuPageContentProps {
+  initialItems?: SanityMenuItem[];
+}
+
+export function MenuPageContent({ initialItems = [] }: MenuPageContentProps) {
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>("popular");
-  const [activeItemIndex, setActiveItemIndex] = useState<number>(1);
+  const [activeItemIndex, setActiveItemIndex] = useState<number>(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  // Normalize items from Sanity
+  const menuItems: MenuItem[] = useMemo(() => {
+    return initialItems.map((item) => ({
+      id: item.id,
+      name: {
+        th: item.nameTh,
+        en: item.nameEn || item.nameTh,
+      },
+      price: item.price,
+      category: item.category as MenuItem["category"],
+      image: item.image || "/menu/catalog/เมน-ชา-ชาพช.webp",
+      isPopular: item.isPopular,
+    }));
+  }, [initialItems]);
+
   // Filter items by active category
   const categoryItems = useMemo(() => {
-    return MENU_ITEMS.filter((item) => {
+    return menuItems.filter((item) => {
       if (activeCategory === "popular") {
         return Boolean(item.isPopular || item.category === "popular");
       }
       return item.category === activeCategory;
     });
-  }, [activeCategory]);
+  }, [menuItems, activeCategory]);
 
   // Filtered items based on Search
   const searchFilteredItems = useMemo(() => {
@@ -38,7 +67,7 @@ export function MenuPageContent() {
   // Reset active index when category changes
   const handleCategoryChange = (catId: string) => {
     setActiveCategory(catId);
-    setActiveItemIndex(1);
+    setActiveItemIndex(0);
     setSearchQuery("");
   };
 
@@ -106,94 +135,96 @@ export function MenuPageContent() {
       </section>
 
       {/* 2. Clean Product Showcase Carousel */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 overflow-hidden">
-        
-        {/* Navigation Arrow Left (ปุ่มลูกศรซ้าย ทรงกลมสีเทาอ่อนตามแบบ) */}
-        <button
-          type="button"
-          onClick={handlePrev}
-          aria-label="Previous drink"
-          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-300/80 hover:bg-stone-400 dark:bg-stone-800/90 dark:hover:bg-stone-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer active:scale-95"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
+      {categoryItems.length > 0 && (
+        <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 overflow-hidden">
+          
+          {/* Navigation Arrow Left (ปุ่มลูกศรซ้าย ทรงกลมสีเทาอ่อนตามแบบ) */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous drink"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-300/80 hover:bg-stone-400 dark:bg-stone-800/90 dark:hover:bg-stone-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer active:scale-95"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-        {/* Navigation Arrow Right (ปุ่มลูกศรขวา ทรงกลมสีเทาอ่อนตามแบบ) */}
-        <button
-          type="button"
-          onClick={handleNext}
-          aria-label="Next drink"
-          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-300/80 hover:bg-stone-400 dark:bg-stone-800/90 dark:hover:bg-stone-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer active:scale-95"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
+          {/* Navigation Arrow Right (ปุ่มลูกศรขวา ทรงกลมสีเทาอ่อนตามแบบ) */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next drink"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-300/80 hover:bg-stone-400 dark:bg-stone-800/90 dark:hover:bg-stone-700 text-white flex items-center justify-center shadow-lg transition-all duration-200 cursor-pointer active:scale-95"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
 
-        {/* Horizontal Carousel Track */}
-        <div
-          ref={sliderRef}
-          className="flex items-center gap-6 sm:gap-10 md:gap-14 overflow-x-auto scroll-smooth py-6 px-12 sm:px-16 no-scrollbar"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {categoryItems.map((item, idx) => {
-            const isActive = idx === activeItemIndex;
+          {/* Horizontal Carousel Track */}
+          <div
+            ref={sliderRef}
+            className="flex items-center gap-6 sm:gap-10 md:gap-14 overflow-x-auto scroll-smooth py-6 px-12 sm:px-16 no-scrollbar"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {categoryItems.map((item, idx) => {
+              const isActive = idx === activeItemIndex;
 
-            return (
-              <div
-                key={item.id}
-                data-menu-slide
-                onClick={() => setActiveItemIndex(idx)}
-                className={cn(
-                  "shrink-0 flex flex-col items-center justify-center cursor-pointer transition-all duration-500 select-none group",
-                  isActive
-                    ? "scale-110 sm:scale-115 opacity-100 z-10"
-                    : "scale-95 sm:scale-90 opacity-70 hover:opacity-95"
-                )}
-                style={{ width: "210px" }}
-              >
-                {/* Drink Cup Presentation (วางบนพื้นขาวสะอาดตา พร้อมเงาเบาๆ ใต้แก้ว) */}
-                <div className="relative aspect-[3/4] w-full max-w-[200px] flex items-center justify-center">
-                  {/* Natural Soft Shadow underneath cup */}
-                  <div
-                    className={cn(
-                      "absolute bottom-1 w-32 h-5 bg-black/20 dark:bg-black/50 rounded-full blur-md transition-all duration-300",
-                      isActive ? "scale-115 opacity-80" : "scale-90 opacity-40"
-                    )}
-                  />
-
-                  {/* Drink Presentation (Pure clean display without card background box) */}
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center">
-                    <Image
-                      src={item.image}
-                      alt={item.name[language]}
-                      fill
-                      sizes="220px"
-                      className="object-cover object-center rounded-2xl scale-100 group-hover:scale-105 transition-transform duration-500"
+              return (
+                <div
+                  key={item.id}
+                  data-menu-slide
+                  onClick={() => setActiveItemIndex(idx)}
+                  className={cn(
+                    "shrink-0 flex flex-col items-center justify-center cursor-pointer transition-all duration-500 select-none group",
+                    isActive
+                      ? "scale-105 opacity-100 z-10"
+                      : "scale-90 opacity-70 hover:opacity-95"
+                  )}
+                  style={{ width: "150px" }}
+                >
+                  {/* Drink Cup Presentation */}
+                  <div className="relative aspect-[3/4] w-full max-w-[130px] sm:max-w-[140px] flex items-center justify-center">
+                    {/* Natural Soft Shadow underneath cup */}
+                    <div
+                      className={cn(
+                        "absolute bottom-1 w-24 h-4 bg-black/20 dark:bg-black/50 rounded-full blur-md transition-all duration-300",
+                        isActive ? "scale-110 opacity-70" : "scale-85 opacity-30"
+                      )}
                     />
+
+                    {/* Drink Presentation */}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center">
+                      <Image
+                        src={item.image}
+                        alt={item.name[language]}
+                        fill
+                        sizes="(max-width: 640px) 130px, 140px"
+                        className="object-contain object-center scale-95 group-hover:scale-100 transition-transform duration-500"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Typography Under Cup: Name & Price */}
+                  <div className="text-center mt-4 sm:mt-5 space-y-1">
+                    <h3
+                      className={cn(
+                        "font-medium text-stone-900 dark:text-white tracking-tight line-clamp-1 transition-colors font-prompt",
+                        isActive
+                          ? "text-base sm:text-lg font-bold text-stone-950 dark:text-white"
+                          : "text-sm sm:text-base text-stone-700 dark:text-stone-300"
+                      )}
+                    >
+                      {item.name[language]}
+                    </h3>
+                    <p className="text-sm sm:text-base font-normal text-stone-800 dark:text-stone-300 font-prompt">
+                      <span>{item.price}</span>{" "}
+                      <span>{language === "th" ? "บาท" : "THB"}</span>
+                    </p>
                   </div>
                 </div>
-
-                {/* Typography Under Cup: Name & Price */}
-                <div className="text-center mt-4 sm:mt-5 space-y-1">
-                  <h3
-                    className={cn(
-                      "font-medium text-stone-900 dark:text-white tracking-tight line-clamp-1 transition-colors font-prompt",
-                      isActive
-                        ? "text-base sm:text-lg font-bold text-stone-950 dark:text-white"
-                        : "text-sm sm:text-base text-stone-700 dark:text-stone-300"
-                    )}
-                  >
-                    {item.name[language]}
-                  </h3>
-                  <p className="text-sm sm:text-base font-normal text-stone-800 dark:text-stone-300 font-prompt">
-                    <span>{item.price}</span>{" "}
-                    <span>{language === "th" ? "บาท" : "THB"}</span>
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* 3. Full Catalog Grid (รายการทั้งหมดในหมวดหมู่ ดูสะดวก สะอาดตา) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 border-t border-stone-100 dark:border-white/5">
@@ -232,13 +263,13 @@ export function MenuPageContent() {
                 className="group flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:-translate-y-1"
               >
                 {/* Product Cup Container (Clean without card background) */}
-                <div className="relative aspect-[3/4] w-full max-w-[190px] rounded-2xl overflow-hidden flex items-center justify-center mb-3">
+                <div className="relative aspect-[3/4] w-full max-w-[140px] sm:max-w-[150px] rounded-2xl overflow-hidden flex items-center justify-center mb-3">
                   <Image
                     src={item.image}
                     alt={item.name[language]}
                     fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover object-center rounded-2xl scale-100 group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 140px, 150px"
+                    className="object-contain object-center scale-95 group-hover:scale-100 transition-transform duration-500"
                   />
                 </div>
 

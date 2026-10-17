@@ -12,7 +12,20 @@ import {
   ContactFormSection,
 } from "./index";
 
-export function HomePageContent() {
+interface SanityPromotion {
+  _id: string;
+  titleTh?: string;
+  titleEn?: string;
+  bannerImage: string;
+  isPopup?: boolean;
+  linkUrl?: string;
+}
+
+interface HomePageContentProps {
+  initialPromotions?: SanityPromotion[];
+}
+
+export function HomePageContent({ initialPromotions = [] }: HomePageContentProps) {
   return (
     <div className="bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white selection:bg-[#c69255] selection:text-white transition-colors duration-300">
       {/* Opening Intro Video Screen: Plays continuously until user scrolls */}
@@ -37,7 +50,7 @@ export function HomePageContent() {
       <FinalCtaSection />
 
       {/* Festival & Seasonal Popup Dialog */}
-      <SeasonalPopupDialog />
+      <SeasonalPopupDialog initialPromotions={initialPromotions} />
     </div>
   );
 }
