@@ -17,6 +17,15 @@
 
   --color-brand-black: #0c0a09;
   --color-brand-gold: #c69255;
+
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4k: 2560px;
 }
 
 :root {

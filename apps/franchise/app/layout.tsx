@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { StoreProvider } from "@/lib/store-context";
-import { Navbar } from "@/components/layout/navbar";
+import { AppShell } from "@/components/layout/app-shell";
+import { RouteLoadingBar } from "@/components/ui/route-loading-bar";
 
 export const metadata: Metadata = {
   title: "Super Black Coffee - Franchise B2B Portal",
@@ -15,15 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body className="antialiased bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+      <body className="antialiased bg-slate-50 text-slate-900">
+        <Suspense fallback={null}>
+          <RouteLoadingBar />
+        </Suspense>
         <StoreProvider>
-          <Navbar />
-          <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
-            {children}
-          </main>
-          <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-            © 2026 Super Black Coffee Co., Ltd. ระบบสั่งของแฟรนไชส์และการจัดส่ง B2B
-          </footer>
+          <AppShell>{children}</AppShell>
         </StoreProvider>
       </body>
     </html>

@@ -1,5 +1,12 @@
 export type AccountApprovalStatus = "pending_approval" | "approved" | "rejected";
 
+export interface CompanyAdminUser {
+  id: string;
+  email: string;
+  name: string;
+  role: "company_admin";
+}
+
 export interface FranchiseUser {
   id: string;
   email: string;

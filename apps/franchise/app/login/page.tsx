@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store-context";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Lock, Mail, AlertCircle, Sparkles, ArrowRight } from "lucide-react";
+import { Lock, Mail, AlertCircle, ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,11 +36,6 @@ export default function LoginPage() {
         setError(res.error || "อีเมลหรือรหัสผ่านไม่ถูกต้อง");
       }
     }, 400);
-  };
-
-  const handleQuickDemo = () => {
-    login("siam@superblack.co");
-    router.push("/store");
   };
 
   return (
@@ -120,28 +115,24 @@ export default function LoginPage() {
               >
                 {loading ? "กำลังตรวจสอบข้อมูล..." : "เข้าสู่ระบบ (Login)"}
               </Button>
-
-              {/* Demo button */}
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={handleQuickDemo}
-                  className="w-full text-xs text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200 py-2.5 rounded-lg transition-colors font-medium flex items-center justify-center gap-1.5"
-                >
-                  <Sparkles className="h-3.5 w-3.5 text-amber-600" />
-                  <span>⚡ ทดลองเข้าด้วยบัญชีสาขาตัวอย่าง (Demo Login)</span>
-                </button>
-              </div>
             </form>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
-              ยังไม่มีบัญชีสาขาแฟรนไชส์?{" "}
-              <Link
-                href="/register"
-                className="font-semibold text-[#80503a] hover:underline"
-              >
-                ลงทะเบียนสาขาใหม่ (Register)
-              </Link>
+            <div className="mt-6 pt-4 border-t border-slate-100 text-center space-y-2 text-xs text-slate-500">
+              <div>
+                ยังไม่มีบัญชีสาขาแฟรนไชส์?{" "}
+                <Link
+                  href="/register"
+                  className="font-semibold text-[#80503a] hover:underline"
+                >
+                  ลงทะเบียนสาขาใหม่ (Register)
+                </Link>
+              </div>
+              <div className="pt-1 text-[11px] text-slate-400">
+                สำหรับเจ้าหน้าที่บริษัท:{" "}
+                <Link href="/admin" className="text-amber-700 hover:underline font-medium">
+                  เข้าสู่ระบบแอดมินสำนักงานใหญ่ (Admin)
+                </Link>
+              </div>
             </div>
           </CardContent>
         </Card>

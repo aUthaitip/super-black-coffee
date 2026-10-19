@@ -21,7 +21,7 @@ import Link from "next/link";
 
 export default function StoreCatalogPage() {
   const router = useRouter();
-  const { products, addToCart, cart, user, isLoggedIn, toggleProductAvailability, updateProductStock } = useStore();
+  const { products, addToCart, cart, user, isLoggedIn } = useStore();
 
   React.useEffect(() => {
     if (!isLoggedIn || !user || user.approvalStatus !== "approved") {
@@ -56,6 +56,7 @@ export default function StoreCatalogPage() {
     { id: "syrups_sauces", label: "ไซรัป & ซอส" },
     { id: "tea_powder", label: "ชา & ผงเครื่องดื่ม" },
     { id: "packaging", label: "บรรจุภัณฑ์ & แก้ว" },
+    { id: "equipment", label: "อุปกรณ์ & เครื่องชง" },
   ];
 
   const filteredProducts = products.filter((prod) => {
@@ -153,6 +154,22 @@ export default function StoreCatalogPage() {
               </div>
             </div>
           ))}
+        </div>
+      ) : filteredProducts.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-xs">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-50 text-[#80503a] mb-4">
+            <ShoppingBag className="h-8 w-8" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-800">
+            {products.length === 0
+              ? "ยังไม่มีสินค้าในระบบ"
+              : "ไม่พบสินค้าตรงกับเงื่อนไขการค้นหา"}
+          </h3>
+          <p className="mt-1 text-sm text-slate-500 max-w-md mx-auto">
+            {products.length === 0
+              ? "ขณะนี้ยังไม่มีรายการสินค้าพร้อมจำหน่าย"
+              : "ลองเปลี่ยนคำค้นหา หรือเลือกดูหมวดหมู่อื่น"}
+          </p>
         </div>
       ) : (
         /* Product Grid */
@@ -286,72 +303,6 @@ export default function StoreCatalogPage() {
         </div>
       )}
 
-      {/* Sanity CMS Product Manager Simulator Tool */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-          <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-lg bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs">
-              S
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-slate-950 flex items-center gap-2">
-                Sanity Studio Simulator (จำลองการจัดการสินค้าหลังบ้าน)
-              </h4>
-              <p className="text-[11px] text-slate-500">
-                จำลองปุ่ม "เปิด/ปิดขาย (isAvailable)" และ "ใส่จำนวนสต็อก (stockQuantity)" ที่แอดมินตั้งค่าใน Sanity Studio
-              </p>
-            </div>
-          </div>
-          <span className="text-[10px] bg-amber-100 text-amber-900 font-semibold px-2 py-0.5 rounded-full w-fit">
-            Sanity Schema: franchiseProduct
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {products.map((p) => {
-            const isOutOfStock = !p.isAvailable || p.stockQuantity <= 0;
-            return (
-              <div
-                key={p.id}
-                className="p-3 rounded-xl border border-slate-100 bg-slate-50/70 space-y-2 text-xs"
-              >
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-semibold text-slate-800 truncate" title={p.name}>
-                    {p.name}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-200/60">
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">สต็อกใน Sanity:</span>
-                    <input
-                      type="number"
-                      min={0}
-                      value={p.stockQuantity}
-                      onChange={(e) => updateProductStock(p.id, Number(e.target.value) || 0)}
-                      className="w-16 h-7 rounded border border-slate-200 bg-white px-1.5 text-xs font-mono font-bold text-slate-900"
-                    />
-                  </div>
-
-                  <div className="text-right">
-                    <span className="text-[10px] text-slate-400 block">ปุ่มเปิด/ปิดขาย:</span>
-                    <button
-                      onClick={() => toggleProductAvailability(p.id)}
-                      className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-colors ${
-                        p.isAvailable && p.stockQuantity > 0
-                          ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                          : "bg-red-600 text-white hover:bg-red-700"
-                      }`}
-                    >
-                      {p.isAvailable && p.stockQuantity > 0 ? "🟢 เปิด (มีของ)" : "🔴 ปิด (หมด)"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }

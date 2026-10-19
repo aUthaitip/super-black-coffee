@@ -19,8 +19,8 @@ export const franchiseProduct = defineType({
     }),
     defineField({
       name: "isAvailable",
-      title: "สถานะเปิดขาย (เปิด = มีสินค้าพร้อมขาย / ปิด = สินค้าหมด)",
-      description: "ถ้ากดปิด (Toggle Off) หน้าบ้านจะขึ้นว่า 'สินค้าหมด' และกดสั่งซื้อไม่ได้",
+      title: "สถานะเปิดขาย / ปิดขาย (สวิตช์เปิด-ปิดสินค้าหมด)",
+      description: "🟢 เปิด = มีสินค้าพร้อมขาย | 🔴 ปิด = สินค้าหมด (หน้าร้านจะขึ้นป้าย 'สินค้าหมด' ทันทีและกดสั่งซื้อไม่ได้)",
       type: "boolean",
       initialValue: true,
     }),
@@ -52,17 +52,10 @@ export const franchiseProduct = defineType({
     }),
     defineField({
       name: "category",
-      title: "หมวดหมู่สินค้า",
-      type: "string",
-      options: {
-        list: [
-          { title: "เมล็ดกาแฟ (Coffee Beans)", value: "coffee_beans" },
-          { title: "ไซรัปและซอส (Syrups & Sauces)", value: "syrups_sauces" },
-          { title: "ชาและผงเครื่องดื่ม (Tea & Powders)", value: "tea_powder" },
-          { title: "บรรจุภัณฑ์ & แก้ว (Packaging)", value: "packaging" },
-          { title: "อุปกรณ์ & เครื่องชง (Equipment)", value: "equipment" },
-        ],
-      },
+      title: "หมวดหมู่สินค้า (Category)",
+      description: "เลือกหมวดหมู่สินค้า (สามารถกดคลิกสร้างหมวดหมู่ใหม่ได้ทันทีจากตรงนี้)",
+      type: "reference",
+      to: [{ type: "category" }],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -91,16 +84,19 @@ export const franchiseProduct = defineType({
     select: {
       title: "name",
       sku: "sku",
+      categoryTitle: "category.title",
       isAvailable: "isAvailable",
       stockQuantity: "stockQuantity",
       price: "price",
       media: "image",
     },
-    prepare({ title, sku, isAvailable, stockQuantity, price, media }) {
-      const statusText = isAvailable !== false && (stockQuantity ?? 1) > 0 ? "🟢 มีสินค้า" : "🔴 หมด";
+    prepare({ title, sku, categoryTitle, isAvailable, stockQuantity, price, media }) {
+      const isOutOfStock = isAvailable === false || (stockQuantity ?? 0) <= 0;
+      const statusBadge = isOutOfStock ? "🔴 สินค้าหมด (ปิดขาย)" : "🟢 พร้อมส่ง";
+      const catText = categoryTitle ? `[${categoryTitle}] ` : "";
       return {
         title,
-        subtitle: `[${sku}] ฿${price} | สต็อก: ${stockQuantity ?? 0} (${statusText})`,
+        subtitle: `${statusBadge} | ${catText}[${sku}] ฿${price} (คงเหลือ: ${stockQuantity ?? 0})`,
         media,
       };
     },

@@ -44,6 +44,7 @@ export default function RegisterPage() {
   const [phone, setPhone] = useState("");
   const [contractFile, setContractFile] = useState<File | null>(null);
   const [contractFileName, setContractFileName] = useState("");
+  const [contractFileUrl, setContractFileUrl] = useState("");
 
   // OTP State
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -55,13 +56,57 @@ export default function RegisterPage() {
   const [formError, setFormError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // File upload handler
+  // File upload handler with image optimization
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setContractFile(file);
       setContractFileName(file.name);
       setFormError("");
+
+      const isImage = file.type.startsWith("image/");
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (!result) return;
+
+        if (isImage) {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            let { width, height } = img;
+            const maxDimension = 1200;
+
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+              ctx.drawImage(img, 0, 0, width, height);
+              const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.8);
+              setContractFileUrl(compressedDataUrl);
+            } else {
+              setContractFileUrl(result);
+            }
+          };
+          img.src = result;
+        } else {
+          // PDF or other documents
+          setContractFileUrl(result);
+        }
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -154,7 +199,7 @@ export default function RegisterPage() {
         password,
         branchName,
         phone,
-        contractFileUrl: contractFileName || "franchise_contract.pdf",
+        contractFileUrl: contractFileUrl || contractFileName || "franchise_contract.pdf",
       });
 
       setLoading(false);
@@ -165,14 +210,6 @@ export default function RegisterPage() {
         setOtpError(res.error || "เกิดข้อผิดพลาดในการลงทะเบียน");
       }
     }, 800);
-  };
-
-  // Simulation: Test Company Approval button
-  const handleSimulateCompanyApproval = () => {
-    if (!pendingUser) return;
-    approveBranch(pendingUser.id);
-    login(pendingUser.email);
-    router.push("/store");
   };
 
   return (
@@ -520,27 +557,6 @@ export default function RegisterPage() {
               <p className="text-[11px] text-amber-800 pt-1 border-t border-amber-200/60">
                 ⚠️ เจ้าหน้าที่ฝ่ายสัญญาของ Super Black Coffee จะตรวจเอกสารสัญญาภายใน 24 ชม. และแจ้งผลการอนุมัติสิทธิ์เข้าใช้งานกลับไปยังอีเมลของท่าน
               </p>
-            </div>
-
-            {/* Sandbox Simulation Tool */}
-            <div className="p-4 rounded-xl bg-slate-900 text-white space-y-2.5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-amber-300">
-                  🛠️ เครื่องมือทดสอบระบบ (Company Admin Simulator):
-                </span>
-                <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">
-                  โหมดทดสอบ
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-300">
-                คลิกปุ่มด้านล่างเพื่อจำลองว่า "เจ้าหน้าที่บริษัทตรวจสัญญาผ่าน และกดอนุมัติสิทธิ์ให้สาขาเรียบร้อย"
-              </p>
-              <Button
-                onClick={handleSimulateCompanyApproval}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold h-9"
-              >
-                ✓ จำลองบริษัทอนุมัติสัญญา & เข้าสู่หน้าสั่งของทันที
-              </Button>
             </div>
 
             <div className="pt-2 text-center">

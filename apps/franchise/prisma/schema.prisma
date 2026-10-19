@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("company_admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  image       String?
+  order       Int       @default(0)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id             String      @id @default(cuid())
+  sku            String      @unique
+  name           String
+  categoryId     String?
+  category       Category?   @relation(fields: [categoryId], references: [id])
+  categorySlug   String      @default("coffee_beans")
+  categoryName   String      @default("เมล็ดกาแฟ")
+  unit           String
+  price          Float
+  marketPrice    Float
+  image          String
+  stockQuantity  Int         @default(100)
+  isAvailable    Boolean     @default(true)
+  description    String?
+  minOrder       Int?        @default(1)
+  order          Int         @default(0)
+  orderItems     OrderItem[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Branch {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  password        String?
+  fullName        String
+  branchName      String
+  branchCode      String   @unique
+  phone           String
+  contractFileUrl String?
+  address         String?
+  approvalStatus  String   @default("pending_approval")
+  submittedAt     String?
+  approvedAt      String?
+  orders          Order[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  branchId        String?
+  branch          Branch?     @relation(fields: [branchId], references: [id])
+  branchCode      String
+  branchName      String
+  contactName     String
+  phone           String
+  shippingAddress String
+  subtotal        Float
+  tax             Float
+  shippingFee     Float
+  grandTotal      Float
+  status          String      @default("pending_review")
+  paymentMethod   String      @default("bank_transfer")
+  paymentSlipUrl  String
+  paymentSlipName String?
+  transferTime    String?
+  confirmedAt     String?
+  confirmedBy     String?
+  trackingNumber  String?
+  deliveryCarrier String?
+  salesNotes      String?
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id])
+  productName String
+  sku         String
+  unit        String
+  quantity    Int
+  price       Float
+  total       Float
+  createdAt   DateTime @default(now())
+}
