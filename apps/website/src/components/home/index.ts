@@ -1,6 +1,5 @@
 export * from "./hero-section";
 export * from "./highlights-section";
-export * from "./signature-menu-section";
 export * from "./branch-promotions-section";
 export * from "./brand-story-section";
 export * from "./franchise-teaser-section";

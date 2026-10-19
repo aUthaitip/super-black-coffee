@@ -4,13 +4,79 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Clock, Eye, ArrowLeft, Share2, Check } from "lucide-react";
+import { PortableText } from "next-sanity";
 import { useLanguage } from "@/i18n/language-provider";
 import { BlogPost, BLOG_DATA } from "@/data/blog";
 import { cn } from "@/lib/utils";
+import { urlForImage } from "@/sanity/image";
 
 interface BlogDetailContentProps {
   post: BlogPost;
 }
+
+const portableTextComponents = {
+  types: {
+    image: ({ value }: { value: any }) => {
+      if (!value?.asset?._ref) {
+        return null;
+      }
+      return (
+        <div className="relative my-8 aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-white/10 shadow-sm">
+          <Image
+            src={urlForImage(value)?.url() || ""}
+            alt={value.alt || "รูปภาพประกอบบทความ"}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 68vw"
+          />
+        </div>
+      );
+    },
+  },
+  block: {
+    h1: ({ children }: any) => (
+      <h1 className="text-2xl sm:text-3xl font-bold text-stone-950 dark:text-white mt-8 mb-4 tracking-tight">
+        {children}
+      </h1>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="text-xl sm:text-2xl font-bold text-stone-950 dark:text-white mt-8 mb-4 tracking-tight">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="text-lg sm:text-xl font-bold text-stone-950 dark:text-white mt-6 mb-3 tracking-tight">
+        {children}
+      </h3>
+    ),
+    h4: ({ children }: any) => (
+      <h4 className="text-base sm:text-lg font-bold text-[#b47836] dark:text-[#c69255] mt-6 mb-2 tracking-tight">
+        {children}
+      </h4>
+    ),
+    normal: ({ children }: any) => (
+      <p className="text-stone-600 dark:text-stone-300 leading-relaxed font-normal mb-4 whitespace-pre-line">
+        {children}
+      </p>
+    ),
+  },
+  marks: {
+    strong: ({ children }: any) => (
+      <strong className="font-bold text-stone-950 dark:text-white">{children}</strong>
+    ),
+    link: ({ value, children }: any) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#b47836] dark:text-[#c69255] underline hover:opacity-80 transition-opacity"
+      >
+        {children}
+      </a>
+    ),
+  },
+};
+
 
 export function BlogDetailContent({ post }: BlogDetailContentProps) {
   const { language } = useLanguage();
@@ -141,25 +207,39 @@ export function BlogDetailContent({ post }: BlogDetailContentProps) {
               />
             </div>
 
-            {/* Article Sections (Paragraphs & Subheadings) */}
-            <div className="space-y-10 pt-4 text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
-              {sections.map((section) => (
-                <section
-                  key={section.id}
-                  id={section.id}
-                  className="space-y-4 scroll-mt-24"
-                >
-                  <h2 className="text-xl sm:text-2xl font-bold text-stone-950 dark:text-white tracking-tight pt-2">
-                    {section.title[language]}
-                  </h2>
-                  {section.content[language].map((paragraph, pIdx) => (
-                    <p key={pIdx} className="text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
-                      {paragraph}
-                    </p>
-                  ))}
-                </section>
-              ))}
-            </div>
+            {/* Article Content: PortableText (from Sanity) or Sections (from static data) */}
+            {((language === "th" ? post.rawContentTh : post.rawContentEn) || post.rawContentTh) ? (
+              <div className="pt-4 text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
+                <PortableText
+                  value={((language === "th" ? post.rawContentTh : post.rawContentEn) || post.rawContentTh) as any}
+                  components={portableTextComponents}
+                />
+              </div>
+            ) : sections.length > 0 ? (
+              <div className="space-y-10 pt-4 text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
+                {sections.map((section) => (
+                  <section
+                    key={section.id}
+                    id={section.id}
+                    className="space-y-4 scroll-mt-24"
+                  >
+                    <h2 className="text-xl sm:text-2xl font-bold text-stone-950 dark:text-white tracking-tight pt-2">
+                      {section.title[language]}
+                    </h2>
+                    {section.content[language].map((paragraph, pIdx) => (
+                      <p key={pIdx} className="text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <div className="pt-4 text-stone-600 dark:text-stone-300 text-sm sm:text-base leading-relaxed">
+                <p>{post.excerpt[language]}</p>
+              </div>
+            )}
+
 
             {/* Back to Blog Button */}
             <div className="pt-10 border-t border-stone-200 dark:border-white/10">

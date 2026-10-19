@@ -36,6 +36,8 @@ export interface BlogPost {
     en: string;
   };
   sections?: BlogSection[];
+  rawContentTh?: any[];
+  rawContentEn?: any[];
 }
 
 export interface BlogPageData {
@@ -364,6 +366,57 @@ export const BLOG_DATA: BlogPageData = {
         en: "August 15, 2026",
       },
       views: 45,
+      introParagraph: {
+        th: "กาแฟคั่วเข้ม (Dark Roast) มักถูกเข้าใจผิดว่าเป็นกาแฟที่มีแต่ความขมไหม้ แต่แท้จริงแล้วในโลกของ Specialty Coffee การทำ Deep Dark Roast ให้มีมิติ มีความหวานตามธรรมชาติของช็อกโกแลต และไม่มีกลิ่นไหม้ฉุน เป็นหนึ่งในศิลปะขั้นสูงสุดที่ต้องอาศัยทั้งประสบการณ์ การควบคุมอุณหภูมิ และเมล็ดกาแฟเกรดสูงสุด",
+        en: "Dark roast coffee is often misunderstood as merely bitter and burnt. In the specialty coffee realm, achieving a balanced deep roast with natural chocolate sweetness requires precise temperature control and pristine beans.",
+      },
+      sections: [
+        {
+          id: "bean-selection",
+          title: {
+            th: "การคัดเลือกเมล็ดกาแฟสายพันธุ์พิเศษ",
+            en: "Careful Selection of Specialty Bean Varietals",
+          },
+          content: {
+            th: [
+              "เราคัดสรรเมล็ดกาแฟอาราบิกาและโรบัสต้าเกรดส่งออกจากแหล่งปลูกบนที่ราบสูงโบลาเวน (Bolaven Plateau) สปป.ลาว ซึ่งมีความสูงกว่าระดับน้ำทะเล 1,200 เมตร ดินภูเขาไฟอุดมด้วยแร่ธาตุ ทำให้เมล็ดมีความหนาแน่นสูง ทนทานต่อการคั่วในระดับลึกโดยไม่สูญเสียกลิ่นอโรมา",
+            ],
+            en: [
+              "We source specialty Arabica and fine Robusta from the volcanic soils of the Bolaven Plateau at 1,200m altitude, ensuring dense beans capable of deep roasting while retaining aroma.",
+            ],
+          },
+        },
+        {
+          id: "roasting-profile",
+          title: {
+            th: "โปรไฟล์การคั่วลับเฉพาะฉบับ Super Black",
+            en: "Super Black's Proprietary Roasting Profile",
+          },
+          content: {
+            th: [
+              "เราใช้เทคนิค Slow Roast ควบคุมกราฟความร้อนแบบค่อยเป็นค่อยไป ทำให้เกิดปฏิกิริยา Maillard Reaction และ Caramelization อย่างสมบูรณ์ ปลดล็อกรสชาติ Dark Chocolate, Roasted Hazelnut และบอดี้ที่หนานุ่มติดปลายลิ้นยาวนาน (Long Finish)",
+            ],
+            en: [
+              "Using a slow roasting technique, we master Maillard and caramelization reactions, unlocking decadent dark chocolate notes and rich velvety mouthfeel.",
+            ],
+          },
+        },
+        {
+          id: "brewing-recommendation",
+          title: {
+            th: "วิธีชงให้อร่อยที่สุดสำหรับ Specialty Dark Roast",
+            en: "Brewing Recommendations for Dark Roast",
+          },
+          content: {
+            th: [
+              "เหมาะอย่างยิ่งสำหรับการสกัดด้วยเครื่องเอสเปรสโซ และโมก้าพอท (Moka Pot) โดยใช้น้ำอุณหภูมิประมาณ 88-90°C เพื่อหลีกเลี่ยงความขมที่เกินพอดี และดึงความหวานนุ่มนวลออกมาอย่างเต็มที่",
+            ],
+            en: [
+              "Best extracted via espresso machine or Moka Pot using water temperatures around 88-90°C to extract optimum sweetness.",
+            ],
+          },
+        },
+      ],
     },
     {
       id: "5",
@@ -386,6 +439,42 @@ export const BLOG_DATA: BlogPageData = {
         en: "August 28, 2026",
       },
       views: 18,
+      introParagraph: {
+        th: "การเติบโตอย่างก้าวกระโดดของยานยนต์ไฟฟ้า (EV) ในประเทศไทย ได้เปลี่ยนพฤติกรรมการแวะพักของผู้ขับขี่ Super Black Coffee เล็งเห็นโอกาสนี้ จึงผนึกกำลังกับ IGreen+ EV Charging Station สร้างโมเดล One-Stop Service ที่ตอบโจทย์ทั้งการเติมพลังให้คนและรถไปพร้อมๆ กัน",
+        en: "The rapid surge of electric vehicles in Thailand reshapes commuter habits. Super Black Coffee partners with IGreen+ EV Charging to create an all-in-one rest hub.",
+      },
+      sections: [
+        {
+          id: "ev-lifestyle",
+          title: {
+            th: "ทำไมสถานีชาร์จ EV ต้องมาพร้อมกับคาเฟ่คุณภาพ?",
+            en: "Why EV Charging Needs a Quality Cafe Experience?",
+          },
+          content: {
+            th: [
+              "ระยะเวลาเฉลี่ยในการชาร์จไฟรถยนต์แบบ DC Fast Charge อยู่ที่ 20-40 นาที ซึ่งเป็นช่วงเวลาที่สมบูรณ์แบบสำหรับการนั่งพักผ่อนในร้านกาแฟที่สะดวกสบาย มี Wi-Fi ความเร็วสูง ปลั๊กไฟสำหรับทำงาน และเครื่องดื่มคุณภาพดี",
+            ],
+            en: [
+              "A typical 20-40 minute DC fast charging session is the ideal window to unwind in a comfortable cafe with fast Wi-Fi and premium coffee.",
+            ],
+          },
+        },
+        {
+          id: "green-future",
+          title: {
+            th: "มุ่งสู่อนาคตที่ใส่ใจสิ่งแวดล้อม",
+            en: "Committed to a Greener Future",
+          },
+          content: {
+            th: [
+              "เราใช้วัสดุบรรจุภัณฑ์ที่ย่อยสลายได้ทางชีวภาพ (Eco-Friendly Packaging) ควบคู่ไปกับการสนับสนุนการใช้พลังงานสะอาด เพื่อร่วมขับเคลื่อนสังคมคาร์บอนต่ำอย่างยั่งยืน",
+            ],
+            en: [
+              "We utilize biodegradable packaging alongside clean energy charging infrastructure to champion sustainable eco-friendly mobility.",
+            ],
+          },
+        },
+      ],
     },
     {
       id: "6",
@@ -408,6 +497,58 @@ export const BLOG_DATA: BlogPageData = {
         en: "September 10, 2026",
       },
       views: 56,
+      introParagraph: {
+        th: "การเปิดร้านกาแฟเป็นความฝันของใครหลายคน แต่การบริหารร้านให้อยู่รอดและเติบโตอย่างยั่งยืนในตลาดที่มีการแข่งขันสูง จำเป็นต้องมีพาร์ตเนอร์ที่แข็งแกร่ง มีระบบรองรับ และส่งมอบวัตถุดิบคุณภาพสูงอย่างสม่ำเสมอ",
+        en: "Opening a coffee shop is a dream for many, but scaling sustainably requires a reliable partner, turnkey systems, and consistent premium ingredients.",
+      },
+      sections: [
+        {
+          id: "turnkey-system",
+          title: {
+            th: "ระบบบริหารจัดการร้านแบบ Turnkey",
+            en: "Comprehensive Turnkey Management System",
+          },
+          content: {
+            th: [
+              "Super Black Coffee มอบระบบ POS ระบบคลังสินค้าอัตโนมัติ และการสั่งซื้อวัตถุดิบราคาส่งผ่านระบบออนไลน์ ทำให้เจ้าของสาขาสามารถควบคุมต้นทุนและตรวจเช็กยอดขายได้แบบเรียลไทม์จากทุกที่",
+            ],
+            en: [
+              "Super Black delivers comprehensive POS, automated stock control, and online B2B ingredient replenishment right to your doorstep.",
+            ],
+          },
+        },
+        {
+          id: "barista-academy",
+          title: {
+            th: "หลักสูตรอบรมบาริสต้ามาตรฐานสากล",
+            en: "World-Class Barista Training Academy",
+          },
+          content: {
+            th: [
+              "เรามีทีมเทรนเนอร์มืออาชีพฝึกอบรมตั้งแต่พื้นฐานการสกัดกาแฟ การสตีมนม การดูแลรักษาเครื่องชง ไปจนถึงมาตรฐานการบริการลูกค้า เพื่อให้ทุกแก้วที่เสิร์ฟมีรสชาติสมบูรณ์แบบตามมาตรฐานของแบรนด์",
+            ],
+            en: [
+              "Our academy trains staff in espresso extraction, milk texturing, machine maintenance, and hospitality etiquette.",
+            ],
+          },
+        },
+        {
+          id: "marketing-support",
+          title: {
+            th: "การตลาดและการสนับสนุนอย่างต่อเนื่อง",
+            en: "Ongoing Marketing and Operational Support",
+          },
+          content: {
+            th: [
+              "ทีมการตลาดส่วนกลางจัดแคมเปญโปรโมชันตลอดทั้งปี มีสื่อประชาสัมพันธ์ระดับประเทศ ช่วยสร้างการรับรู้และดึงดูดลูกค้าเข้าสู่สาขาของคุณอย่างต่อเนื่อง",
+            ],
+            en: [
+              "Nationwide brand campaigns, seasonal promotions, and ongoing marketing drive customer footfall directly to your branch.",
+            ],
+          },
+        },
+      ],
     },
   ],
 };
+

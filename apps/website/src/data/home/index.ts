@@ -8,24 +8,24 @@ export const HOME_DATA = {
       en: "CRAFTED FOR YOUR MOMENT",
     },
     headingLine1: {
-      th: "กาแฟดีในทุกจังหวะของคุณ",
-      en: "Great Coffee, Every Moment.",
+      th: "กาแฟออร์แกนิกจากไร่ของเราเอง",
+      en: "Single-Origin Coffee From Our Own Farm",
     },
     headingLine2: {
-      th: "รสชาติเข้มลึกระดับมาสเตอร์",
-      en: "Deeply Roasted Masterpiece",
+      th: "ส่งตรงสู่แก้วของคุณในทุกจังหวะ",
+      en: "Delivered to Your Cup, Every Moment",
     },
     description: {
-      th: "คัดสรรเมล็ดกาแฟสายพันธุ์พิเศษจากแหล่งปลูกบนดอยสูง คั่วสดใหม่ผ่านระบบควบคุมความร้อนระดับวินาที เพื่อเสิร์ฟรสสัมผัสช็อกโกแลต คาราเมล และบอดี้ที่หนักแน่น",
-      en: "Carefully selected single-origin beans grown in high-altitude soil, roasted with second-precision heat control to unlock rich dark chocolate, caramel notes, and an uncompromising body.",
+      th: "คัดสรรเมล็ดกาแฟออร์แกนิกจากไร่ส่วนตัว ณ แขวงหัวพัน สปป.ลาว บนความสูงกว่า 1,200 เมตร ปลูกด้วยวิถีธรรมชาติไร้สารเคมี คั่วสดใหม่เพื่อรสชาติที่กลมกล่อม สะอาด และหอมละมุนในทุกแก้ว พร้อมเปิดรับพาร์ทเนอร์ร่วมเติบโตกับธุรกิจแฟรนไชส์ที่มั่นคง",
+      en: "Handcrafted organic beans cultivated from our own high-altitude farm in Houaphan, Lao PDR (>1,200m). Naturally grown without chemicals, freshly roasted for pure aroma and depth. Grow with our proven franchise model.",
     },
     exploreMenuText: {
-      th: "สนใจธุรกิจ",
-      en: "Business Interest",
+      th: "ดูแพ็กเกจแฟรนไชส์",
+      en: "Franchise Packages",
     },
     findBranchText: {
-      th: "ร่วมธุรกิจ",
-      en: "Franchise Partnership",
+      th: "เรื่องราวไร่กาแฟของเรา",
+      en: "Our Farm Story",
     },
     metrics: [
       {

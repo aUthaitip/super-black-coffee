@@ -7,6 +7,7 @@ import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { FloatingContactWidget } from "@/components/ui/floating-contact-widget";
 
 const promptFont = Prompt({
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -26,8 +27,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Super Black Coffee | กาแฟดีในทุกจังหวะของคุณ (Great Coffee, Every Moment)",
-  description: "เว็บไซต์ทางการของ Super Black Coffee แบรนด์กาแฟพรีเมียม สเปเชียลตี้ดาร์กโรสต์ และระบบแฟรนไชส์คุณภาพ",
+  title: "Super Black Coffee | กาแฟออร์แกนิกจากไร่ปลูกเอง พร้อมโมเดลธุรกิจแฟรนไชส์คุณภาพ",
+  description: "สัมผัสรสชาติกาแฟออร์แกนิกแท้ ส่งตรงจากไร่ของเรา ณ แขวงหัวพัน สปป.ลาว พร้อมร่วมเติบโตกับธุรกิจแฟรนไชส์ Super Black Coffee และ Lifestyle Hub ครบวงจร",
 };
 
 export default function RootLayout({
@@ -62,6 +63,7 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
               <Footer />
               <ScrollToTop />
+              <FloatingContactWidget />
             </SmoothScrollProvider>
           </LanguageProvider>
         </ThemeProvider>

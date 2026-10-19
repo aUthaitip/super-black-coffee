@@ -46,6 +46,31 @@ export async function getBlogPosts() {
   }
 }
 
+// Fetch Single Blog Post by Slug
+export async function getBlogPostBySlug(slug: string) {
+  const query = `*[_type == "post" && slug.current == $slug][0] {
+    _id,
+    titleTh,
+    titleEn,
+    "title": coalesce(titleTh, titleEn),
+    "slug": slug.current,
+    excerptTh,
+    excerptEn,
+    "excerpt": coalesce(excerptTh, excerptEn),
+    "coverImage": coverImage.asset->url,
+    category,
+    publishedAt,
+    contentTh,
+    contentEn
+  }`;
+  try {
+    return await client.fetch(query, { slug });
+  } catch (error) {
+    console.error("Error fetching post by slug from Sanity:", error);
+    return null;
+  }
+}
+
 // Fetch Branches
 export async function getBranches() {
   const query = `*[_type == "branch"] {

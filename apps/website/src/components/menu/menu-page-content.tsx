@@ -107,30 +107,32 @@ export function MenuPageContent({ initialItems = [] }: MenuPageContentProps) {
             {language === "th" ? "เมนู Super Black" : "Super Black Menu"}
           </h1>
 
-          {/* Clean Category Tabs */}
-          <nav className="flex flex-wrap items-center justify-center gap-5 sm:gap-7 md:gap-9 pb-1">
-            {MENU_CATEGORIES.map((cat) => {
-              const isSelected = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => handleCategoryChange(cat.id)}
-                  className={cn(
-                    "text-sm sm:text-base font-medium transition-all relative pb-2 cursor-pointer select-none",
-                    isSelected
-                      ? "text-stone-950 dark:text-white font-bold"
-                      : "text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white"
-                  )}
-                >
-                  <span>{cat.label[language]}</span>
-                  {isSelected && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#c69255] rounded-full shadow-[0_0_8px_rgba(198,146,85,0.4)]" />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+          {/* Clean Category Tabs (Horizontal Scrollable on Mobile for seamless UX) */}
+          <div className="overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+            <nav className="flex items-center justify-start sm:justify-center gap-4 sm:gap-7 md:gap-9 pb-2 min-w-max sm:min-w-0 mx-auto">
+              {MENU_CATEGORIES.map((cat) => {
+                const isSelected = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => handleCategoryChange(cat.id)}
+                    className={cn(
+                      "text-xs sm:text-sm md:text-base font-medium transition-all relative pb-2 cursor-pointer select-none whitespace-nowrap",
+                      isSelected
+                        ? "text-stone-950 dark:text-white font-bold"
+                        : "text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white"
+                    )}
+                  >
+                    <span>{cat.label[language]}</span>
+                    {isSelected && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#c69255] rounded-full shadow-[0_0_8px_rgba(198,146,85,0.4)]" />
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
         </div>
       </section>
 

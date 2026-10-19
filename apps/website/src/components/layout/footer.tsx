@@ -146,9 +146,10 @@ export function Footer() {
 
               {/* Facebook */}
               <li>
-                <button
-                  type="button"
-                  onClick={() => handleSocialClick("Facebook")}
+                <a
+                  href="https://www.facebook.com/profile.php?id=61573117743066"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 group text-stone-700 dark:text-[#a1a1aa] hover:text-stone-950 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   <div className="w-8 h-8 rounded-full border border-stone-300 dark:border-white/20 bg-white dark:bg-transparent flex items-center justify-center shrink-0 group-hover:border-[#c69255] transition-colors shadow-xs">
@@ -157,8 +158,9 @@ export function Footer() {
                     </svg>
                   </div>
                   <span className="font-normal">Super Black Coffee</span>
-                </button>
+                </a>
               </li>
+
             </ul>
           </div>
 

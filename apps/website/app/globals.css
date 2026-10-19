@@ -17,6 +17,9 @@
 
   --color-brand-black: #0c0a09;
   --color-brand-gold: #c69255;
+
+  --font-prompt: var(--font-prompt), sans-serif;
+  --font-sans: var(--font-prompt), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {

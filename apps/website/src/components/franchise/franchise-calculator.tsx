@@ -385,7 +385,7 @@ export function FranchiseCalculator({ language = "th" }: { language?: string }) 
                           <span className="text-stone-600 dark:text-stone-300 font-medium">
                             {item.label}
                           </span>
-                          <span className="font-bold text-stone-900 dark:text-white shrink-0 font-mono">
+                          <span className="font-semibold text-stone-900 dark:text-white shrink-0">
                             {item.value}
                           </span>
                         </div>
@@ -402,8 +402,8 @@ export function FranchiseCalculator({ language = "th" }: { language?: string }) 
                           {calculatedData.note || "*ราคาประเมินเบื้องต้น อาจมีการปรับเปลี่ยนตามขนาดหน้างาน"}
                         </span>
                       </div>
-                      <div className="text-2xl sm:text-3xl font-black text-[#b47836] dark:text-[#d8a162] font-mono shrink-0">
-                        {calculatedData.totalPrice.toLocaleString("th-TH")} <span className="text-sm font-sans font-normal text-stone-600 dark:text-stone-300">บาท</span>
+                      <div className="text-2xl sm:text-3xl font-bold text-[#b47836] dark:text-[#d8a162] shrink-0">
+                        {calculatedData.totalPrice.toLocaleString("th-TH")} <span className="text-sm font-normal text-stone-600 dark:text-stone-300">บาท</span>
                       </div>
                     </div>
 
@@ -417,7 +417,7 @@ export function FranchiseCalculator({ language = "th" }: { language?: string }) 
                         href="/#contact"
                         className="font-bold text-[#b47836] dark:text-[#c69255] hover:underline"
                       >
-                        ปรึกษาฝ่ายพัฒนาธุรกิจ →
+                        ปรึกษาฝ่ายพัฒนาธุรกิจ
                       </a>
                     </div>
 
