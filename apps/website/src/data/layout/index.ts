@@ -50,7 +50,7 @@ export const LAYOUT_DATA = {
   ],
 
   portalLink: {
-    href: "/franchise-portal",
+    href: process.env.NEXT_PUBLIC_FRANCHISE_URL || "http://localhost:3002",
     label: { th: "เข้าสู่ระบบ", en: "Sign In" },
   },
 

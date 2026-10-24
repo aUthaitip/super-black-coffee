@@ -1,0 +1,36 @@
+.admin-ui {
+  --background: #fafafa;
+  --foreground: #27272a;
+  --card: #ffffff;
+  --card-foreground: #27272a;
+  --popover: #ffffff;
+  --popover-foreground: #27272a;
+  --primary: #235544;
+  --primary-foreground: #ffffff;
+  --secondary: #edf3ef;
+  --secondary-foreground: #235544;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f4f4f5;
+  --accent-foreground: #27272a;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #759b86;
+  --radius: 0.75rem;
+  font-family: inherit;
+  font-weight: 500;
+}
+.admin-ui :is(h1, h2, h3, h4, strong, b) {
+  font-weight: 500;
+}
+.admin-ui [data-slot="dialog-content"] {
+  color: var(--foreground);
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-ui *,
+  .admin-ui *::before,
+  .admin-ui *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

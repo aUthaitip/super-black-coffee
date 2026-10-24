@@ -1,9 +1,20 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { FranchiseUser, CartItem, Order, Product, AccountApprovalStatus, CompanyAdminUser, OrderStatus } from "./types";
-import { MOCK_PRODUCTS, INITIAL_ORDERS, INITIAL_BRANCHES } from "./mock-data";
+import {
+  FranchiseUser,
+  CartItem,
+  Order,
+  Product,
+  Category,
+  AccountApprovalStatus,
+  CompanyAdminUser,
+  OrderStatus,
+} from "./types";
+import { INITIAL_ORDERS, INITIAL_BRANCHES } from "./mock-data";
 import { PageLoader } from "@/components/ui/page-loader";
+import { cartStorageKey, writeStoredCart } from "./cart-storage";
+import { usePersistedCart } from "./use-persisted-cart";
 
 export interface RegisterPayload {
   fullName: string;
@@ -17,8 +28,20 @@ export interface RegisterPayload {
 interface StoreContextType {
   user: FranchiseUser | null;
   isLoggedIn: boolean;
-  login: (email: string, password?: string) => { success: boolean; error?: string; status?: AccountApprovalStatus; user?: FranchiseUser };
-  register: (data: RegisterPayload) => { success: boolean; error?: string; user?: FranchiseUser };
+  login: (
+    email: string,
+    password?: string,
+  ) => {
+    success: boolean;
+    error?: string;
+    status?: AccountApprovalStatus;
+    user?: FranchiseUser;
+  };
+  register: (data: RegisterPayload) => {
+    success: boolean;
+    error?: string;
+    user?: FranchiseUser;
+  };
   approveBranch: (userId: string) => void;
   rejectBranch: (userId: string) => void;
   registeredBranches: FranchiseUser[];
@@ -26,9 +49,15 @@ interface StoreContextType {
   logout: () => void;
   adminUser: CompanyAdminUser | null;
   isAdminLoggedIn: boolean;
-  adminLogin: (email: string, password: string) => { success: boolean; error?: string };
+  adminLogin: (
+    email: string,
+    password: string,
+  ) => { success: boolean; error?: string };
   adminLogout: () => void;
+  categories: Category[];
   products: Product[];
+  isProductsLoading: boolean;
+  productsError: string | null;
   toggleProductAvailability: (productId: string) => void;
   updateProductStock: (productId: string, newStock: number) => void;
   cart: CartItem[];
@@ -42,9 +71,14 @@ interface StoreContextType {
     paymentSlipName?: string;
     shippingAddress: string;
     shippingNotes?: string;
-  }) => Order;
+  }) => Promise<Order>;
   confirmOrderPayment: (orderId: string, adminName?: string) => void;
-  updateOrderStatus: (orderId: string, status: OrderStatus, trackingNumber?: string, carrier?: string) => void;
+  updateOrderStatus: (
+    orderId: string,
+    status: OrderStatus,
+    trackingNumber?: string,
+    carrier?: string,
+  ) => void;
   getOrderById: (id: string) => Order | undefined;
   clearAllData: () => void;
   refreshData: () => Promise<void>;
@@ -55,17 +89,20 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<FranchiseUser | null>(null);
   const [adminUser, setAdminUser] = useState<CompanyAdminUser | null>(null);
-  const [registeredBranches, setRegisteredBranches] = useState<FranchiseUser[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const local = localStorage.getItem("sbc_registered_users");
-        if (local) return JSON.parse(local);
-      } catch {}
-    }
-    return INITIAL_BRANCHES;
-  });
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [registeredBranches, setRegisteredBranches] = useState<FranchiseUser[]>(
+    () => {
+      if (typeof window !== "undefined") {
+        try {
+          const local = localStorage.getItem("sbc_registered_users");
+          if (local) return JSON.parse(local);
+        } catch {}
+      }
+      return INITIAL_BRANCHES;
+    },
+  );
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
   const [orders, setOrders] = useState<Order[]>(() => {
     if (typeof window !== "undefined") {
       try {
@@ -76,6 +113,9 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     return INITIAL_ORDERS;
   });
   const [isInitialized, setIsInitialized] = useState(false);
+  const [cart, setCart] = usePersistedCart(user?.id, isInitialized);
+  const [isProductsLoading, setIsProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -110,7 +150,10 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         .then((dbBranches) => {
           if (Array.isArray(dbBranches) && dbBranches.length > 0) {
             setRegisteredBranches(dbBranches);
-            localStorage.setItem("sbc_registered_users", JSON.stringify(dbBranches));
+            localStorage.setItem(
+              "sbc_registered_users",
+              JSON.stringify(dbBranches),
+            );
           } else if (Array.isArray(dbBranches)) {
             // DB is empty, check if we had locally created branches
             const localRaw = localStorage.getItem("sbc_registered_users");
@@ -142,7 +185,10 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         .then((dbOrders) => {
           if (Array.isArray(dbOrders) && dbOrders.length > 0) {
             setOrders(dbOrders);
-            localStorage.setItem("sbc_franchise_orders", JSON.stringify(dbOrders));
+            localStorage.setItem(
+              "sbc_franchise_orders",
+              JSON.stringify(dbOrders),
+            );
           } else {
             const localOrders = localStorage.getItem("sbc_franchise_orders");
             if (localOrders) {
@@ -161,41 +207,34 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
       localStorage.removeItem("sbc_franchise_products");
 
-      // Fetch products exclusively from Sanity CMS
-      import("./sanity").then(({ sanityClient, urlFor }) => {
-        sanityClient
-          .fetch(
-            `*[_type == "franchiseProduct"] | order(order asc, _createdAt desc){
-              ...,
-              "categorySlug": coalesce(category->slug.current, category, ""),
-              "categoryTitle": coalesce(category->title, categoryName, "")
-            }`
-          )
-          .then((sanityProducts) => {
-            if (Array.isArray(sanityProducts) && sanityProducts.length > 0) {
-              const mapped: Product[] = sanityProducts.map((sp: any) => ({
-                id: sp._id,
-                name: sp.name,
-                sku: sp.sku,
-                category: sp.categorySlug || sp.category,
-                categoryName: sp.categoryTitle || sp.categoryName || "ทั่วไป",
-                price: sp.price,
-                marketPrice: sp.marketPrice || Math.round(sp.price * 1.2),
-                unit: sp.unit,
-                stockQuantity: typeof sp.stockQuantity === "number" ? sp.stockQuantity : 100,
-                isAvailable: sp.isAvailable !== false && (sp.stockQuantity ?? 1) > 0,
-                image: sp.image ? urlFor(sp.image).width(600).height(600).url() : "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&q=80",
-                description: sp.description || "",
-              }));
-              setProducts(mapped);
-            } else {
-              setProducts([]);
-            }
-          })
-          .catch(() => {
-            setProducts([]);
-          });
-      });
+      // The catalog API and checkout share the same published Sanity products.
+      fetch("/api/products", { cache: "no-store" })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to load Sanity products");
+          return res.json();
+        })
+        .then((catalog: Product[]) => {
+          setProducts(catalog);
+          setCategories(
+            Array.from(
+              new Map(
+                catalog.map((product) => [
+                  product.category,
+                  {
+                    id: product.category,
+                    slug: product.category,
+                    title: product.categoryName,
+                  },
+                ]),
+              ).values(),
+            ),
+          );
+        })
+        .catch(() => {
+          setProducts([]);
+          setProductsError("โหลดสินค้าไม่สำเร็จ กรุณาลองรีเฟรชหน้าอีกครั้ง");
+        })
+        .finally(() => setIsProductsLoading(false));
     } catch {
       // Fallback
     } finally {
@@ -206,7 +245,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const toggleProductAvailability = (productId: string) => {
     setProducts((prev) => {
       const updated = prev.map((p) =>
-        p.id === productId ? { ...p, isAvailable: !p.isAvailable } : p
+        p.id === productId ? { ...p, isAvailable: !p.isAvailable } : p,
       );
       localStorage.setItem("sbc_franchise_products", JSON.stringify(updated));
       return updated;
@@ -222,7 +261,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
               stockQuantity: newStock,
               isAvailable: newStock > 0 ? p.isAvailable : false,
             }
-          : p
+          : p,
       );
       localStorage.setItem("sbc_franchise_products", JSON.stringify(updated));
       return updated;
@@ -232,10 +271,12 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const login = (email: string, password?: string) => {
     try {
       const storedUsersRaw = localStorage.getItem("sbc_registered_users");
-      const storedUsers: FranchiseUser[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+      const storedUsers: FranchiseUser[] = storedUsersRaw
+        ? JSON.parse(storedUsersRaw)
+        : [];
 
       const found = storedUsers.find(
-        (u) => u.email.toLowerCase() === email.trim().toLowerCase()
+        (u) => u.email.toLowerCase() === email.trim().toLowerCase(),
       );
 
       if (found) {
@@ -250,7 +291,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
           return {
             success: false,
             status: "pending_approval" as AccountApprovalStatus,
-            error: "บัญชีสาขาของคุณอยู่ระหว่างรอเจ้าหน้าที่ฝ่ายสัญญาตรวจสอบใบสัญญาซื้อขายแฟรนไชส์ (ยังไม่ได้รับอนุมัติให้เข้าใช้)",
+            error:
+              "บัญชีสาขาของคุณอยู่ระหว่างรอเจ้าหน้าที่ฝ่ายสัญญาตรวจสอบใบสัญญาซื้อขายแฟรนไชส์ (ยังไม่ได้รับอนุมัติให้เข้าใช้)",
             user: found,
           };
         }
@@ -258,14 +300,19 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
           return {
             success: false,
             status: "rejected" as AccountApprovalStatus,
-            error: "ใบสัญญาซื้อขายแฟรนไชส์ของคุณไม่ผ่านการตรวจสอบ กรุณาติดต่อฝ่ายแฟรนไชส์บริษัท โทร 02-123-4567",
+            error:
+              "ใบสัญญาซื้อขายแฟรนไชส์ของคุณไม่ผ่านการตรวจสอบ กรุณาติดต่อฝ่ายแฟรนไชส์บริษัท โทร 02-123-4567",
             user: found,
           };
         }
 
         setUser(found);
         localStorage.setItem("sbc_franchise_user", JSON.stringify(found));
-        return { success: true, status: "approved" as AccountApprovalStatus, user: found };
+        return {
+          success: true,
+          status: "approved" as AccountApprovalStatus,
+          user: found,
+        };
       }
 
       return {
@@ -287,10 +334,12 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const storedUsersRaw = localStorage.getItem("sbc_registered_users");
-      const storedUsers: FranchiseUser[] = storedUsersRaw ? JSON.parse(storedUsersRaw) : [];
+      const storedUsers: FranchiseUser[] = storedUsersRaw
+        ? JSON.parse(storedUsersRaw)
+        : [];
 
       const duplicate = storedUsers.some(
-        (u) => u.email.toLowerCase() === data.email.trim().toLowerCase()
+        (u) => u.email.toLowerCase() === data.email.trim().toLowerCase(),
       );
 
       if (duplicate) {
@@ -333,7 +382,9 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         .then((saved) => {
           if (saved && saved.id) {
             setRegisteredBranches((prev) =>
-              prev.map((b) => (b.email === saved.email ? { ...b, id: saved.id } : b))
+              prev.map((b) =>
+                b.email === saved.email ? { ...b, id: saved.id } : b,
+              ),
             );
           }
         })
@@ -382,7 +433,9 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     const storedUsersRaw = localStorage.getItem("sbc_registered_users");
     if (storedUsersRaw) {
       const storedUsers: FranchiseUser[] = JSON.parse(storedUsersRaw);
-      const list = storedUsers.map((u) => (u.id === user.id ? { ...u, address: newAddress } : u));
+      const list = storedUsers.map((u) =>
+        u.id === user.id ? { ...u, address: newAddress } : u,
+      );
       localStorage.setItem("sbc_registered_users", JSON.stringify(list));
     }
   };
@@ -390,17 +443,32 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("sbc_franchise_user");
-    setCart([]);
   };
 
   const addToCart = (product: Product, quantity = 1) => {
+    if (
+      !user ||
+      !product.isAvailable ||
+      !Number.isSafeInteger(quantity) ||
+      quantity <= 0
+    )
+      return;
+    const minimum = Math.max(1, product.minOrder || 1);
+    if (product.stockQuantity < minimum) return;
+    quantity = Math.max(minimum, Math.min(quantity, product.stockQuantity));
     setCart((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
         return prev.map((item) =>
           item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+            ? {
+                ...item,
+                quantity: Math.min(
+                  product.stockQuantity,
+                  item.quantity + quantity,
+                ),
+              }
+            : item,
         );
       }
       return [...prev, { product, quantity }];
@@ -408,14 +476,23 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
+    if (!Number.isSafeInteger(quantity)) return;
     if (quantity <= 0) {
       removeFromCart(productId);
       return;
     }
     setCart((prev) =>
       prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
+        item.product.id === productId
+          ? {
+              ...item,
+              quantity: Math.max(
+                item.product.minOrder || 1,
+                Math.min(quantity, item.product.stockQuantity),
+              ),
+            }
+          : item,
+      ),
     );
   };
 
@@ -427,7 +504,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     setCart([]);
   };
 
-  const createOrder = ({
+  const createOrder = async ({
     paymentSlipUrl,
     paymentSlipName,
     shippingAddress,
@@ -437,18 +514,20 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     paymentSlipName?: string;
     shippingAddress: string;
     shippingNotes?: string;
-  }): Order => {
+  }): Promise<Order> => {
     const subtotal = cart.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
-      0
+      0,
     );
     const tax = Math.round(subtotal * 0.07 * 100) / 100;
     const shippingFee = subtotal >= 5000 ? 0 : 250;
     const grandTotal = subtotal + tax + shippingFee;
 
+    const initialOrderNumber = `SBC-ORD-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.floor(100 + Math.random() * 900)}`;
+
     const newOrder: Order = {
       id: "ord-" + Date.now(),
-      orderNumber: `SBC-ORD-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.floor(100 + Math.random() * 900)}`,
+      orderNumber: initialOrderNumber,
       createdAt: new Date().toLocaleString("th-TH", {
         year: "numeric",
         month: "2-digit",
@@ -478,42 +557,56 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       paymentMethod: "bank_transfer",
       paymentSlipUrl,
       paymentSlipName: paymentSlipName || "transfer_slip.jpg",
-      transferTime: new Date().toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit" }),
-      salesNotes: shippingNotes ? `หมายเหตุ: ${shippingNotes} (สลิปโอนส่งถึงแอดมินแล้ว รอตรวจสอบ)` : "ส่งสลิปโอนเงินเข้าฝ่ายขาย/แอดมินแล้ว รอตรวจสอบยอด",
+      transferTime: new Date().toLocaleTimeString("th-TH", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      salesNotes: shippingNotes
+        ? `หมายเหตุ: ${shippingNotes} (สลิปโอนส่งถึงแอดมินแล้ว รอตรวจสอบ)`
+        : "ส่งสลิปโอนเงินเข้าฝ่ายขาย/แอดมินแล้ว รอตรวจสอบยอด",
     };
 
-    const updatedOrders = [newOrder, ...orders];
-    setOrders(updatedOrders);
-    localStorage.setItem(
-      "sbc_franchise_orders",
-      JSON.stringify(updatedOrders)
-    );
-    clearCart();
-
-    // Sync to DB
-    fetch("/api/orders", {
+    // 1. Sync directly to Postgres Database first
+    const res = await fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...newOrder,
         branchId: user?.id,
       }),
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((saved) => {
-        if (saved && saved.id) {
-          setOrders((prev) =>
-            prev.map((o) => (o.orderNumber === saved.orderNumber ? { ...o, id: saved.id } : o))
-          );
-        }
-      })
-      .catch(() => {});
+    });
 
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => null);
+      throw new Error(
+        errBody?.error || "ไม่สามารถส่งคำสั่งซื้อไปยังฐานข้อมูลได้",
+      );
+    }
+
+    const saved = await res.json();
+    if (saved && saved.id) {
+      newOrder.id = saved.id;
+      if (saved.orderNumber) {
+        newOrder.orderNumber = saved.orderNumber;
+      }
+    }
+
+    // 2. Save to React state & localStorage
+    setOrders((prev) => {
+      const updated = [newOrder, ...prev];
+      localStorage.setItem("sbc_franchise_orders", JSON.stringify(updated));
+      return updated;
+    });
+
+    clearCart();
     return newOrder;
   };
 
   // Admin action: Confirm payment & approve order
-  const confirmOrderPayment = (orderId: string, adminName = "เจ้าหน้าที่แอดมินฝ่ายขาย") => {
+  const confirmOrderPayment = (
+    orderId: string,
+    adminName = "เจ้าหน้าที่แอดมินฝ่ายขาย",
+  ) => {
     const updated = orders.map((o) => {
       if (o.id === orderId) {
         return {
@@ -527,7 +620,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
             minute: "2-digit",
           }),
           confirmedBy: adminName,
-          salesNotes: "แอดมินตรวจสอบสลิปการโอนเงินถูกต้อง ยืนยันการจัดซื้อเรียบร้อย ส่งคำสั่งเตรียมสินค้าไปยังคลัง",
+          salesNotes:
+            "แอดมินตรวจสอบสลิปการโอนเงินถูกต้อง ยืนยันการจัดซื้อเรียบร้อย ส่งคำสั่งเตรียมสินค้าไปยังคลัง",
         };
       }
       return o;
@@ -551,7 +645,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     orderId: string,
     status: OrderStatus,
     trackingNumber?: string,
-    carrier?: string
+    carrier?: string,
   ) => {
     const updated = orders.map((o) => {
       if (o.id === orderId) {
@@ -646,7 +740,10 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (Array.isArray(branchesRes)) {
         setRegisteredBranches(branchesRes);
-        localStorage.setItem("sbc_registered_users", JSON.stringify(branchesRes));
+        localStorage.setItem(
+          "sbc_registered_users",
+          JSON.stringify(branchesRes),
+        );
       }
       if (Array.isArray(ordersRes)) {
         setOrders(ordersRes);
@@ -658,6 +755,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const clearAllData = () => {
+    if (user) writeStoredCart(cartStorageKey(user.id), []);
     localStorage.removeItem("sbc_registered_users");
     localStorage.removeItem("sbc_franchise_orders");
     localStorage.removeItem("sbc_franchise_user");
@@ -693,7 +791,10 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         isAdminLoggedIn: !!adminUser,
         adminLogin,
         adminLogout,
+        categories,
         products,
+        isProductsLoading,
+        productsError,
         toggleProductAvailability,
         updateProductStock,
         cart,

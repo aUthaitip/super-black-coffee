@@ -22,11 +22,18 @@ export interface FranchiseUser {
   approvedAt?: string;
 }
 
+export interface Category {
+  id: string;
+  title: string;
+  slug: string;
+  order?: number;
+}
+
 export interface Product {
   id: string;
   sku: string;
   name: string;
-  category: "coffee_beans" | "syrups_sauces" | "tea_powder" | "packaging" | "equipment";
+  category: string;
   categoryName: string;
   unit: string;
   price: number;

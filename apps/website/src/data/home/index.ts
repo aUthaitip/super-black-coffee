@@ -143,7 +143,7 @@ export const HOME_DATA = {
           en: "Cloud-based enterprise ERP connecting real-time sales, inventory, and branch standard recipe control.",
         },
         image: "/services/superblackcoffee-service-control.webp",
-        href: "/franchise-portal",
+        href: process.env.NEXT_PUBLIC_FRANCHISE_URL || "http://localhost:3002",
         actionText: { th: "ดูรายละเอียด", en: "System Details" },
         accentColor: "#34d399",
       },

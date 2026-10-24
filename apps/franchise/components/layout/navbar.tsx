@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@/lib/store-context";
@@ -9,188 +9,205 @@ import {
   ShoppingBag,
   Clock,
   LogOut,
-  LogIn,
-  UserPlus,
   Menu,
   X,
   Building2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { LogoutConfirmModal } from "@/components/ui/logout-confirm-modal";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
-export const Navbar = () => {
+export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, cart, logout } = useStore();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const navLinks = [
-    { href: "/store", label: "สั่งซื้อวัตถุดิบ/สินค้า", icon: Coffee },
-    { href: "/orders", label: "ประวัติคำสั่งซื้อ & ติดตาม", icon: Clock },
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const links = [
+    { href: "/store", label: "สั่งสินค้า", icon: Coffee },
+    { href: "/orders", label: "ประวัติคำสั่งซื้อ", icon: Clock },
   ];
-
-  const handleLogout = () => {
-    logout();
-    router.push("/");
-  };
-
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand */}
-        <div className="flex items-center gap-6">
-          <Link href={user ? "/store" : "/"} className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#80503a] text-white font-black text-xl shadow-inner">
+    <header className="sticky top-0 z-40 border-b bg-white">
+      <div className="mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-8">
+          <Link
+            href={user ? "/store" : "/"}
+            className="flex items-center gap-2.5"
+            aria-label="Super Black Coffee หน้าหลัก"
+          >
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white text-lg font-medium">
               SB
-            </div>
-            <div>
-              <span className="font-bold text-slate-900 tracking-tight text-lg">
-                SUPER BLACK COFFEE
+            </span>
+            <span className="leading-tight">
+              <span className="block text-xs sm:text-sm tracking-wide font-medium">
+                SUPER BLACK
               </span>
-            </div>
+              <span className="block text-[9px] sm:text-[10px] tracking-[0.2em] text-muted-foreground mt-1">
+                FRANCHISE
+              </span>
+            </span>
           </Link>
-
-          {/* Desktop Nav for logged-in franchise */}
           {user && (
-            <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isActive
-                        ? "bg-slate-100 text-[#80503a] font-semibold"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {link.label}
-                  </Link>
-                );
-              })}
+            <nav aria-label="เมนูหลัก" className="hidden md:flex gap-1">
+              {links.map(({ href, label, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={pathname === href ? "page" : undefined}
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    pathname === href && "bg-coffee-50 text-primary",
+                  )}
+                >
+                  <Icon />
+                  {label}
+                </Link>
+              ))}
             </nav>
           )}
         </div>
-
-        {/* Right Info & Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {user ? (
             <>
-              <div className="hidden sm:flex items-center gap-2 text-xs text-slate-500 border-r border-slate-200 pr-4">
-                <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200/60">
-                  <Building2 className="h-4 w-4 text-[#80503a]" />
-                  <div>
-                    <div className="font-semibold text-slate-800">{user.branchName}</div>
-                    <div className="text-[10px] text-slate-400">ผู้ดูแล: {user.fullName}</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cart Button */}
+              <span className="hidden xl:flex items-center gap-2 text-xs text-muted-foreground mr-3">
+                <Building2 className="size-4" />
+                <span className="max-w-40 truncate">{user.branchName}</span>
+              </span>
               <Link
                 href="/cart"
-                className="relative flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-xs"
+                aria-label={`ตะกร้า ${count} ชิ้น`}
+                className={buttonVariants({
+                  variant: "outline",
+                  className: "gap-2 px-3 bg-white",
+                })}
               >
-                <ShoppingBag className="h-4 w-4 text-[#80503a]" />
+                <ShoppingBag />
                 <span className="hidden sm:inline">ตะกร้า</span>
-                {totalCartCount > 0 && (
-                  <Badge variant="default" className="h-5 px-1.5 text-xs bg-[#80503a]">
-                    {totalCartCount}
+                {count > 0 && (
+                  <Badge className="px-1.5 min-w-5 justify-center">
+                    {count}
                   </Badge>
                 )}
               </Link>
-
-              {/* Logout button */}
-              <button
-                onClick={() => setShowLogoutModal(true)}
-                title="ออกจากระบบ"
-                className="p-2 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+              <Button
+                size="icon"
+                variant="ghost"
+                aria-label="ออกจากระบบ"
+                className="hidden md:inline-flex text-muted-foreground"
+                onClick={() => setLogoutOpen(true)}
               >
-                <LogOut className="h-4 w-4" />
-              </button>
+                <LogOut />
+              </Button>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="md:hidden"
+                aria-label={menuOpen ? "ปิดเมนู" : "เปิดเมนู"}
+                aria-expanded={menuOpen}
+                aria-controls="mobile-navigation"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {menuOpen ? <X /> : <Menu />}
+              </Button>
             </>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link href="/">
-                <Button variant="ghost" size="sm" className="text-xs gap-1.5">
-                  <LogIn className="h-3.5 w-3.5" />
-                  เข้าสู่ระบบ
-                </Button>
+            <>
+              <Link
+                href="/"
+                className={buttonVariants({
+                  variant: "ghost",
+                  size: "sm",
+                  className: "hidden sm:inline-flex",
+                })}
+              >
+                เข้าสู่ระบบ
               </Link>
-              <Link href="/register">
-                <Button variant="default" size="sm" className="text-xs bg-[#80503a] hover:bg-[#623d2e] gap-1.5">
-                  <UserPlus className="h-3.5 w-3.5" />
-                  ลงทะเบียนสาขาใหม่
-                </Button>
+              <Link
+                href="/register"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: "bg-white",
+                })}
+              >
+                สมัครสาขาใหม่
               </Link>
-            </div>
-          )}
-
-          {/* Mobile hamburger */}
-          {user && (
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg"
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            </>
           )}
         </div>
       </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && user && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
-          <div className="p-3 bg-slate-50 rounded-lg border border-slate-100 text-sm mb-3">
-            <div className="font-semibold text-slate-800">{user.branchName}</div>
-            <div className="text-xs text-slate-500">ผู้ดูแล: {user.fullName}</div>
-          </div>
-
-          <div className="space-y-1">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 hover:bg-slate-100 text-sm font-medium"
-                >
-                  <Icon className="h-4 w-4 text-[#80503a]" />
-                  {link.label}
-                </Link>
-              );
-            })}
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setShowLogoutModal(true);
-              }}
-              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 text-sm font-medium transition-colors"
+      {menuOpen && user && (
+        <nav
+          id="mobile-navigation"
+          aria-label="เมนูมือถือ"
+          className="md:hidden border-t p-4 space-y-2"
+        >
+          <p className="text-sm text-muted-foreground px-3 pb-2">
+            {user.branchName}
+          </p>
+          {links.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className={buttonVariants({
+                variant: "ghost",
+                className: "w-full justify-start",
+              })}
             >
-              <LogOut className="h-4 w-4" />
-              ออกจากระบบ
-            </button>
-          </div>
-        </div>
+              <Icon />
+              {label}
+            </Link>
+          ))}
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-destructive"
+            onClick={() => {
+              setMenuOpen(false);
+              setLogoutOpen(true);
+            }}
+          >
+            <LogOut />
+            ออกจากระบบ
+          </Button>
+        </nav>
       )}
-
-      {/* Logout Confirmation Modal */}
-      <LogoutConfirmModal
-        isOpen={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={handleLogout}
-        title="ยืนยันการออกจากระบบ"
-        description="คุณต้องการออกจากระบบสาขาแฟรนไชส์ใช่หรือไม่?"
-        theme="coffee"
-      />
+      <Dialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="font-medium">ออกจากระบบ</DialogTitle>
+            <DialogDescription>
+              ตะกร้าของสาขาจะถูกเก็บไว้บนเบราว์เซอร์นี้
+              คุณกลับมาสั่งซื้อต่อได้เมื่อเข้าสู่ระบบอีกครั้ง
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">อยู่ในระบบต่อ</Button>
+            </DialogClose>
+            <Button
+              onClick={() => {
+                logout();
+                setLogoutOpen(false);
+                router.push("/");
+              }}
+            >
+              ออกจากระบบ
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </header>
   );
-};
+}
