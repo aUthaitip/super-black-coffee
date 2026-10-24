@@ -37,6 +37,10 @@ export const LAYOUT_DATA = {
           href: "/branches",
           label: { th: "สาขาที่เปิดทำการ", en: "Active Branches" },
         },
+        {
+          href: "/about",
+          label: { th: "เกี่ยวกับเรา", en: "About Us" },
+        },
       ],
     },
     {
@@ -65,8 +69,8 @@ export const LAYOUT_DATA = {
     followUsTitle: { th: "ติดตามเรา", en: "Follow Us" },
     hoursTitle: { th: "เวลาทำการสำนักงานใหญ่", en: "Headquarters Office Hours" },
     hoursDetail: {
-      th: "จันทร์ - ศุกร์: 08:30 - 17:30 น.",
-      en: "Monday - Friday: 08:30 - 17:30",
+      th: "จันทร์ - ศุกร์: 09:00 - 18:00 น.",
+      en: "Monday - Friday: 09:00 - 18:00",
     },
     privacy: { th: "นโยบายความเป็นส่วนตัว", en: "Privacy Policy" },
     terms: { th: "ข้อกำหนดและเงื่อนไข", en: "Terms & Conditions" },
@@ -76,7 +80,7 @@ export const LAYOUT_DATA = {
       en: "This website is a demonstration UI prototype (Demo Only)",
     },
     backToTop: { th: "กลับขึ้นด้านบน", en: "Back to Top" },
-    contactEmail: "contact@superblackcoffee.demo",
-    franchiseEmail: "franchise@superblackcoffee.demo",
+    contactEmail: "superblackcoffee18@gmail.com",
+    franchiseEmail: "superblackcoffee18@gmail.com",
   },
 };

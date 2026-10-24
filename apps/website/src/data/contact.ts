@@ -41,13 +41,13 @@ export const CONTACT_DATA: ContactFormData = {
     {
       id: "email",
       label: "Email HQ",
-      value: "contact@superblackcoffee.com",
+      value: "superblackcoffee18@gmail.com",
       iconName: "Mail",
     },
     {
       id: "phone",
       label: "Franchise & Support Hotline",
-      value: "02-888-9999 (08:30 - 18:00 น.)",
+      value: "062 562 9431 (09:00 - 18:00 น.)",
       iconName: "Phone",
     },
     {

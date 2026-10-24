@@ -3,6 +3,13 @@
   "ui": "tui",
   "tasks": {
     "build": {
+      "env": [
+        "CONTACT_APPS_SCRIPT_URL",
+        "CONTACT_APPS_SCRIPT_SECRET",
+        "CONTACT_APPS_SCRIPT_CONTRACT",
+        "VERCEL_ENV",
+        "SANITY_DEPLOYMENT_ENV"
+      ],
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
@@ -14,6 +21,13 @@
       "dependsOn": ["^check-types"]
     },
     "dev": {
+      "env": [
+        "CONTACT_APPS_SCRIPT_URL",
+        "CONTACT_APPS_SCRIPT_SECRET",
+        "CONTACT_APPS_SCRIPT_CONTRACT",
+        "VERCEL_ENV",
+        "SANITY_DEPLOYMENT_ENV"
+      ],
       "cache": false,
       "persistent": true
     }

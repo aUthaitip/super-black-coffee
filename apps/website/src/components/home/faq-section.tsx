@@ -9,7 +9,7 @@ import { ScrollReveal, ScrollRevealText } from "@/components/ui/scroll-reveal";
 export function FaqSection() {
   const { language } = useLanguage();
   const faq = FAQ_DATA;
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleItem = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));

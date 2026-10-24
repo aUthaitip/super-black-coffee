@@ -12,12 +12,12 @@ export function PhilosophySection() {
   const { philosophy } = ABOUT_DATA;
 
   return (
-    <section className="relative z-10 py-24 bg-black text-white border-t border-white/10 overflow-hidden">
+    <section className="relative z-10 py-24 bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white transition-colors duration-300 border-t border-stone-200 dark:border-white/10 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Photo: about-growing-together.png */}
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden border border-white/15 shadow-2xl group">
+            <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden border border-stone-200 dark:border-white/15 shadow-xl shadow-stone-900/10 dark:shadow-2xl dark:shadow-black/30 group">
               <Image
                 src={philosophy.image}
                 alt={philosophy.tag[language]}
@@ -26,30 +26,18 @@ export function PhilosophySection() {
                 className="object-cover object-center brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="text-xs font-mono uppercase tracking-widest text-[#b57a38]">
-                  GROWING TOGETHER
-                </span>
-                <p className="text-sm font-semibold text-white mt-1">
-                  {philosophy.tag[language]}
-                </p>
-              </div>
             </div>
           </div>
 
           {/* Right Quote */}
           <div className="lg:col-span-6 space-y-8 text-left">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#f3ce9c] font-semibold block">
-              {philosophy.tag[language]}
-            </span>
-
             <blockquote className="border-l-4 border-[#b57a38] pl-6 py-2">
-              <p className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+              <p className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-900 dark:text-white tracking-tight leading-snug">
                 “{philosophy.quote[language]}”
               </p>
             </blockquote>
 
-            <p className="text-sm sm:text-base text-stone-300 font-normal leading-relaxed">
+            <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 font-normal leading-relaxed">
               {language === "th"
                 ? "ทุกหยดกาแฟของ Super Black Coffee เริ่มต้นจากความเคารพในธรรมชาติ ความร่วมมือกับเกษตรกรท้องถิ่น และความตั้งใจของทีมงานที่ต้องการส่งมอบจุดพักที่ดีที่สุดให้คุณในทุก ๆ วัน"
                 : "Every drop of Super Black Coffee begins with respect for terroir and a passionate team committed to giving you the finest restorative sanctuary every day."}
@@ -66,9 +54,9 @@ export function PhilosophySection() {
 
               <Link
                 href="/branches"
-                className="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white font-medium text-xs sm:text-sm tracking-wide backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
+                className="px-8 py-3.5 rounded-full bg-white hover:bg-stone-100 dark:bg-white/10 dark:hover:bg-white/20 border border-stone-200 dark:border-white/15 text-stone-900 dark:text-white font-medium text-xs sm:text-sm tracking-wide backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
               >
-                <MapPin className="w-4 h-4 text-[#b57a38]" />
+                <MapPin className="w-4 h-4 text-[#8a5722] dark:text-[#c69255]" />
                 <span>{language === "th" ? "ค้นหาสาขาใกล้คุณ" : "Find Near Branch"}</span>
               </Link>
             </div>

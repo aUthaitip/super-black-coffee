@@ -36,7 +36,7 @@ export function AboutPageContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-stone-100 selection:bg-[#b57a38] selection:text-black overflow-hidden font-sans">
+    <div className="relative min-h-screen bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-stone-100 selection:bg-[#b57a38] selection:text-white transition-colors duration-300 overflow-hidden font-sans">
       {/* Top Floating Scroll Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8a5722] via-[#b57a38] to-[#f3ce9c] origin-left z-40 pointer-events-none"
@@ -44,7 +44,7 @@ export function AboutPageContent() {
       />
 
       {/* Atmospheric Backdrops */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-[#b57a38]/12 blur-[140px] rounded-full" />
         <div className="absolute top-[40%] -left-48 w-[600px] h-[600px] bg-[#c69255]/8 blur-[160px] rounded-full" />
         <div className="absolute bottom-10 right-0 w-[700px] h-[700px] bg-[#8a5722]/10 blur-[180px] rounded-full" />
@@ -68,22 +68,13 @@ export function AboutPageContent() {
       {/* ========================================================= */}
 
       {/* REPLAY STORY BANNER */}
-      <section className="relative z-20 pt-28 pb-4 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono tracking-widest text-[#f3ce9c] uppercase font-bold">
-            ABOUT US · เรื่องราวของเรา
-          </span>
-          <span className="text-xs text-stone-400 hidden sm:inline font-mono">
-            SUPER BLACK COFFEE
-          </span>
-        </div>
-
+      <section className="relative z-20 pt-12 pb-4 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto flex justify-end">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           type="button"
           onClick={handleRestartStory}
-          className="px-4 py-2 rounded-full bg-[#1e1712] hover:bg-[#b57a38] border border-[#b57a38]/40 hover:border-[#b57a38] text-[#f3ce9c] hover:text-stone-950 font-semibold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-lg"
+          className="px-4 py-2 rounded-full bg-white dark:bg-[#1e1712] hover:bg-[#f0e2d0] dark:hover:bg-[#b57a38] border border-[#b57a38]/40 hover:border-[#b57a38] text-[#8a5722] dark:text-[#f3ce9c] hover:text-stone-950 dark:hover:text-stone-950 font-semibold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-lg"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>{language === "th" ? "ชม Motion Graphics Story อีกครั้ง" : "Replay Story Motion"}</span>

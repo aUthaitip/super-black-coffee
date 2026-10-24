@@ -4,8 +4,10 @@ export const createContactSchema = (language: "th" | "en" = "th") =>
   z.object({
     name: z
       .string()
+      .trim()
       .min(1, {
-        message: language === "th" ? "กรุณากรอกชื่อ-นามสกุล" : "Name is required",
+        message:
+          language === "th" ? "กรุณากรอกชื่อ-นามสกุล" : "Name is required",
       })
       .min(2, {
         message:
@@ -22,18 +24,31 @@ export const createContactSchema = (language: "th" | "en" = "th") =>
 
     phone: z
       .string()
+      .trim()
       .min(1, {
-        message: language === "th" ? "กรุณากรอกเบอร์โทรศัพท์" : "Phone number is required",
+        message:
+          language === "th"
+            ? "กรุณากรอกเบอร์โทรศัพท์"
+            : "Phone number is required",
       })
-      .regex(/^[0-9+\-\s]{9,15}$/, {
+      .regex(/^\+?[0-9][0-9 -]{7,13}[0-9]$/, {
         message:
           language === "th"
             ? "รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง (เช่น 0812345678)"
             : "Invalid phone number format",
+      })
+      .refine((value) => value.replace(/\D/g, "").length >= 9, {
+        message:
+          language === "th"
+            ? "กรุณากรอกเบอร์โทรศัพท์ให้ครบ"
+            : "Enter a complete phone number",
       }),
 
     email: z
       .string()
+      .trim()
+      .toLowerCase()
+      .max(254)
       .min(1, {
         message: language === "th" ? "กรุณากรอกอีเมล" : "Email is required",
       })
@@ -48,6 +63,7 @@ export const createContactSchema = (language: "th" | "en" = "th") =>
 
     message: z
       .string()
+      .trim()
       .min(1, {
         message: language === "th" ? "กรุณากรอกข้อความ" : "Message is required",
       })

@@ -15,21 +15,21 @@ export function HeroOriginSection() {
         {/* Header Title & Location */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-            <span className="text-[#c69255]">ไร่กาแฟ</span>
-            <span className="text-white">หัวพัน สปป.ลาว</span>
+            <span className="text-[#8a5722] dark:text-[#c69255]">ไร่กาแฟ</span>
+            <span className="text-stone-900 dark:text-white">หัวพัน สปป.ลาว</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-stone-300 font-medium tracking-wide">
+          <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 font-medium tracking-wide">
             {hero.locationDetail[language]}
           </p>
 
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#f3ce9c] tracking-tight leading-snug pt-2">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#8a5722] dark:text-[#f3ce9c] tracking-tight leading-snug pt-2">
             {hero.title[language]}
           </h2>
         </div>
 
         {/* Full Image Banner: laos-coffee-farm-dawn.png */}
-        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-[32px] overflow-hidden border border-white/10 shadow-2xl group">
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-[32px] overflow-hidden border border-stone-200 dark:border-white/10 shadow-xl shadow-stone-900/10 dark:shadow-2xl dark:shadow-black/30 group">
           <Image
             src={hero.image}
             alt="Super Black Coffee Houaphan Farm"
@@ -39,10 +39,7 @@ export function HeroOriginSection() {
             className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs font-mono text-[#f3ce9c]">
-            <span className="px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-[#b57a38]/40">
-              {hero.brandSubtitle[language]}
-            </span>
+          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-end text-xs font-mono text-[#f3ce9c]">
             <span className="hidden sm:inline text-stone-300">
               ELEVATION &gt; 1,200 MASL
             </span>
@@ -50,15 +47,15 @@ export function HeroOriginSection() {
         </div>
 
         {/* Story Content Block: รู้จักกับแหล่งปลูกเมล็ดกาแฟของเรา */}
-        <div className="max-w-4xl mx-auto rounded-[32px] bg-[#14100c] border border-white/10 p-8 sm:p-12 space-y-6">
-          <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#b57a38] font-bold">
+        <div className="max-w-4xl mx-auto rounded-[32px] bg-white dark:bg-[#14100c] transition-colors duration-300 border border-stone-200 dark:border-white/10 p-8 sm:p-12 space-y-6">
+          <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#8a5722] dark:text-[#c69255] font-bold">
             SUPER BLACK COFFEE
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 dark:text-white tracking-tight">
             {hero.sectionTitle[language]}
           </h2>
 
-          <div className="space-y-4 text-stone-300 text-sm sm:text-base leading-relaxed font-normal">
+          <div className="space-y-4 text-stone-600 dark:text-stone-300 text-sm sm:text-base leading-relaxed font-normal">
             {hero.introParagraphs.map((p, idx) => (
               <p key={idx} className="leading-relaxed">
                 {p[language]}

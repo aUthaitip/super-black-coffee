@@ -15,8 +15,7 @@ export function FloatingContactWidget() {
   };
 
   const handleLineClick = () => {
-    // สามารถใส่ Line Official Account ID หรือลิงก์ line.me ได้
-    window.open("https://line.me/ti/p/~@superblackcoffee", "_blank", "noopener,noreferrer");
+    window.open("https://line.me/R/ti/p/%40178lhzgu", "_blank", "noopener,noreferrer");
   };
 
   const handleEmailClick = () => {
@@ -30,7 +29,7 @@ export function FloatingContactWidget() {
   };
 
   const handlePhoneClick = () => {
-    window.location.href = "tel:028889999";
+    window.location.href = "tel:0625629431";
   };
 
   return (

@@ -8,7 +8,7 @@ import { schemaTypes } from "./src/sanity/schemaTypes";
 export default defineConfig({
   basePath: "/studio",
   name: "superblackcoffee",
-  title: "Super Black Coffee Studio",
+  title: `Super Black Coffee Studio (${dataset})`,
   projectId,
   dataset,
   plugins: [structureTool()],
