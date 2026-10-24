@@ -17,9 +17,7 @@ This Turborepo includes the following packages/apps:
 ### Apps and Packages
 
 - `website`: [Next.js](https://nextjs.org/) app สำหรับเว็บไซต์แบรนด์กาแฟ (port 3000)
-- `admin`: [Next.js](https://nextjs.org/) app สำหรับระบบสำนักงานใหญ่ (port 3001)
 - `franchise`: [Next.js](https://nextjs.org/) app สำหรับระบบเจ้าของแฟรนไชส์ (port 3002)
-- `stock`: [Next.js](https://nextjs.org/) app สำหรับระบบพนักงานหน้าร้าน (port 3003)
 - `@repo/ui`: React component library ที่แชร์ร่วมกันระหว่างทุกแอป
 - `@repo/eslint-config`: การตั้งค่า ESLint สำหรับ monorepo
 - `@repo/typescript-config`: การตั้งค่า TypeScript (`tsconfig.json`) สำหรับ monorepo
