@@ -7,8 +7,8 @@ export const LAYOUT_DATA = {
     },
     engTagline: "Great Coffee, Every Moment.",
     description: {
-      th: "แบรนด์กาแฟพรีเมียมสัญชาติไทยที่มุ่งมั่นส่งมอบรสชาติกาแฟดำเข้มลึกและประสบการณ์กาแฟคุณภาพสู่ทุกจังหวะชีวิต",
-      en: "A Thai premium specialty coffee brand dedicated to delivering bold, authentic roast experiences for every rhythm of modern life.",
+      th: "แบรนด์กาแฟออร์แกนิกสัญชาติไทยที่มุ่งมั่นส่งมอบรสชาติกาแฟดำเข้มลึกและประสบการณ์กาแฟคุณภาพสู่ทุกจังหวะชีวิต",
+      en: "A Thai organic coffee brand dedicated to delivering rich black coffee and quality coffee experiences for every moment of life.",
     },
   },
 
