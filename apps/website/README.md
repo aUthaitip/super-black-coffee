@@ -31,6 +31,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
+### Website metadata
+
+Public pages use `generateMetadata` for titles, descriptions, Thai/English keywords,
+canonical URLs, Open Graph, and Twitter cards. Blog detail metadata uses the resolved
+article title, excerpt, category, and cover image. Metadata is Thai because the current
+language switch runs in the browser; there are no separate `/th` and `/en` URLs.
+
+The primary canonical origin is `https://superblackcoffee.com`. Set
+`NEXT_PUBLIC_SITE_URL=https://superblackcoffee.com` as a **Config** environment
+variable to make it explicit; when unset, the code uses this same domain.
+Rebuild after changing the domain. Configure `www.superblackcoffee.com` to redirect
+to `superblackcoffee.com` in the Vercel project's Domains settings.
+The website and franchise remain separate projects with separate Sanity settings.
+
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

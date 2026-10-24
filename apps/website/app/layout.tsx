@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getMetadataBase, SITE_NAME, SITE_DESCRIPTION } from "@/lib/metadata";
 import { Prompt, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n/language-provider";
@@ -26,10 +27,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Super Black Coffee | กาแฟออร์แกนิกจากไร่ปลูกเอง พร้อมโมเดลธุรกิจแฟรนไชส์คุณภาพ",
-  description: "สัมผัสรสชาติกาแฟออร์แกนิกแท้ ส่งตรงจากไร่ของเรา ณ แขวงหัวพัน สปป.ลาว พร้อมร่วมเติบโตกับธุรกิจแฟรนไชส์ Super Black Coffee และ Lifestyle Hub ครบวงจร",
-};
+export function generateMetadata(): Metadata {
+  return {
+    metadataBase: getMetadataBase(),
+    title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
+    description: SITE_DESCRIPTION,
+    applicationName: SITE_NAME,
+  };
+}
 
 export default function RootLayout({
   children,
@@ -55,7 +60,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${promptFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col font-prompt selection:bg-[#c69255] selection:text-white`}>
+      <body
+        className={`${promptFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col font-prompt selection:bg-[#c69255] selection:text-white`}
+      >
         <ThemeProvider>
           <LanguageProvider>
             <SmoothScrollProvider>
