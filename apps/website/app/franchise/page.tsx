@@ -1,11 +1,24 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 import { FranchisePageContent } from "@/components/franchise";
 
-export const metadata: Metadata = {
-  title: "สนใจร่วมธุรกิจแฟรนไชส์ | Super Black Coffee & Lifestyle Hub",
-  description:
-    "โอกาสร่วมลงทุนธุรกิจกาแฟพรีเมียมและ Lifestyle Hub สร้างรายได้หลายทาง ทั้งคาเฟ่ สถานีชาร์จ Ultra Fast EV และจุดบริการไปรษณีย์ BPOST65 คืนทุนไว กำไรขั้นต้น 60-65%",
-};
+export function generateMetadata(): Metadata {
+  return createPageMetadata({
+    title: "แฟรนไชส์ร้านกาแฟ และ Lifestyle Hub",
+    description:
+      "ร่วมธุรกิจแฟรนไชส์ Super Black Coffee สำรวจโมเดล Smart Café, Lifestyle Café และ Lifestyle Hub ขนาด S M L พร้อมข้อมูลพื้นที่และเครื่องมือประเมินงบลงทุน",
+    path: "/franchise",
+    keywords: [
+      "แฟรนไชส์กาแฟ",
+      "แฟรนไชส์ร้านกาแฟ",
+      "ลงทุนร้านกาแฟ",
+      "Smart Café",
+      "Lifestyle Café",
+      "Lifestyle Hub",
+      "coffee franchise",
+    ],
+  });
+}
 
 export default function FranchisePage() {
   return <FranchisePageContent />;
