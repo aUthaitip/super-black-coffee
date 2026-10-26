@@ -7,9 +7,9 @@ export const revalidate = 60;
 
 export function generateMetadata(): Metadata {
   return createPageMetadata({
-    title: "กาแฟออร์แกนิกจากลาว และแฟรนไชส์ร้านกาแฟ",
+    title: "เปิดร้านกาแฟของคุณ กับแฟรนไชส์ Super Black Coffee",
     description:
-      "กาแฟออร์แกนิกจากไร่บนดอยสูง ณ แขวงหัวพัน สปป.ลาว สู่แก้วของคุณ สำรวจเมนูเครื่องดื่ม ค้นหาสาขา และร่วมธุรกิจแฟรนไชส์ Super Black Coffee",
+      "วางแผนเปิดร้านกาแฟกับ Super Black Coffee ดูรูปแบบร้าน แพ็กเกจลงทุน และขั้นตอนการร่วมแฟรนไชส์ พร้อมปรึกษาทีมงานก่อนตัดสินใจ",
     path: "/",
     keywords: [
       "กาแฟลาว",

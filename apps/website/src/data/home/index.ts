@@ -4,28 +4,28 @@ export const HOME_DATA = {
   hero: {
     bgImage: SITE_IMAGES.hero.sunsetCafe,
     eyebrow: {
-      th: "CRAFTED FOR YOUR MOMENT",
-      en: "CRAFTED FOR YOUR MOMENT",
+      th: "แฟรนไชส์ร้านกาแฟ Super Black Coffee",
+      en: "SUPER BLACK COFFEE FRANCHISE",
     },
     headingLine1: {
-      th: "กาแฟออร์แกนิกจากไร่ของเราเอง",
-      en: "Single-Origin Coffee From Our Own Farm",
+      th: "เปิดร้านกาแฟของคุณ",
+      en: "Open Your Own Coffee Shop",
     },
     headingLine2: {
-      th: "ส่งตรงสู่แก้วของคุณในทุกจังหวะ",
-      en: "Delivered to Your Cup, Every Moment",
+      th: "กับ Super Black Coffee",
+      en: "with Super Black Coffee",
     },
     description: {
-      th: "คัดสรรเมล็ดกาแฟออร์แกนิกจากไร่ส่วนตัว ณ แขวงหัวพัน สปป.ลาว บนความสูงกว่า 1,200 เมตร ปลูกด้วยวิถีธรรมชาติไร้สารเคมี คั่วสดใหม่เพื่อรสชาติที่กลมกล่อม สะอาด และหอมละมุนในทุกแก้ว พร้อมเปิดรับพาร์ทเนอร์ร่วมเติบโตกับธุรกิจแฟรนไชส์ที่มั่นคง",
-      en: "Handcrafted organic beans cultivated from our own high-altitude farm in Houaphan, Lao PDR (>1,200m). Naturally grown without chemicals, freshly roasted for pure aroma and depth. Grow with our proven franchise model.",
+      th: "เริ่มวางแผนธุรกิจร้านกาแฟของคุณ ดูรูปแบบร้าน แพ็กเกจลงทุน และรายละเอียดการร่วมแฟรนไชส์ พร้อมพูดคุยกับทีมงานก่อนตัดสินใจ",
+      en: "Plan your coffee business. Explore store formats, investment options and franchise details, then talk with our team before deciding.",
     },
-    exploreMenuText: {
+    packagesText: {
       th: "ดูแพ็กเกจแฟรนไชส์",
       en: "Franchise Packages",
     },
-    findBranchText: {
-      th: "เรื่องราวไร่กาแฟของเรา",
-      en: "Our Farm Story",
+    consultText: {
+      th: "ปรึกษาเรื่องเปิดร้าน",
+      en: "Talk About Opening a Store",
     },
     metrics: [
       {
@@ -64,8 +64,8 @@ export const HOME_DATA = {
   highlights: {
 
     title: {
-      th: "บริการครบวงจรเพื่อทุกการเดินทาง",
-      en: "All-in-One Coffee & Lifestyle Hub",
+      th: "ทำไมต้อง Super Black Coffee?",
+      en: "Why Super Black Coffee?",
     },
     subtitle: {
       th: "มากกว่าแค่ร้านกาแฟ สัมผัสประสบการณ์ไลฟ์สไตล์ฮับที่รวมกาแฟสเปเชียลตี้ สถานีชาร์จรถไฟฟ้า จุดส่งพัสดุด่วน และระบบบริหารจัดการระดับมาตรฐาน",
@@ -131,21 +131,6 @@ export const HOME_DATA = {
         href: "/franchise",
         actionText: { th: "ดูรายละเอียด", en: "Franchise Plans" },
         accentColor: "#fbbf24",
-      },
-      {
-        tag: "SUPERBLACK CONTROL",
-        title: {
-          th: "ระบบบริหารจัดการร้านค้าและแฟรนไชส์ครบวงจร",
-          en: "Complete Smart POS & Enterprise Management Platform.",
-        },
-        description: {
-          th: "ระบบคลาวด์เชื่อมโยงยอดขาย สต็อกวัตถุดิบ บัญชี และระบบควบคุมคุณภาพสูตรชงแบบเรียลไทม์จากศูนย์กลาง HQ",
-          en: "Cloud-based enterprise ERP connecting real-time sales, inventory, and branch standard recipe control.",
-        },
-        image: "/services/superblackcoffee-service-control.webp",
-        href: process.env.NEXT_PUBLIC_FRANCHISE_URL || "http://localhost:3002",
-        actionText: { th: "ดูรายละเอียด", en: "System Details" },
-        accentColor: "#34d399",
       },
     ],
   },
@@ -246,16 +231,16 @@ export const HOME_DATA = {
   finalCta: {
     bgImage: SITE_IMAGES.cta.finalCtaCoffee,
     heading: {
-      th: "สัมผัสความเข้มลึกที่แท้จริงได้แล้ววันนี้",
-      en: "Experience True Roast Intensity Today",
+      th: "เริ่มวางแผนร้านกาแฟของคุณวันนี้",
+      en: "Start Planning Your Coffee Shop Today",
     },
     description: {
-      th: "พร้อมเปิดประสบการณ์รสชาติกาแฟพิเศษที่ปรุงสดแก้วต่อแก้ว ที่ Super Black Coffee ทุกสาขาใกล้คุณ",
-      en: "Discover crafted specialty coffee made fresh cup-by-cup at any Super Black store near you.",
+      th: "มีทำเลอยู่แล้ว หรือยังเริ่มจากไอเดีย? พูดคุยกับทีมงานเรื่องรูปแบบร้าน งบลงทุน และขั้นตอนการร่วมแฟรนไชส์",
+      en: "Have a location in mind, or just an idea? Talk with our team about store formats, investment and the steps to becoming a franchise partner.",
     },
-    exploreMenuText: {
-      th: "ค้นหาเมนู",
-      en: "Explore Our Menu",
+    consultText: {
+      th: "ปรึกษาเรื่องเปิดร้าน",
+      en: "Talk to Our Team",
     },
     franchiseText: {
       th: "แพ็กเกจแฟรนไชส์",

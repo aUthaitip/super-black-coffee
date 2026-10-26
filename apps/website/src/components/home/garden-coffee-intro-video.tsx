@@ -10,6 +10,7 @@ interface GardenCoffeeIntroVideoProps {
 
 export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoProps) {
   const { language } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // States
@@ -55,7 +56,7 @@ export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoPro
   // Scroll Reveal Observer: As user scrolls, video scale & opacity adjust smoothly
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollY = -(sectionRef.current?.getBoundingClientRect().top ?? 0);
       const windowHeight = window.innerHeight;
 
       if (scrollY > 15) {
@@ -75,12 +76,14 @@ export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoPro
   }, []);
 
   const handleScrollDown = () => {
+    const nextSection = sectionRef.current?.nextElementSibling;
+    if (!(nextSection instanceof HTMLElement)) return;
     const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number | HTMLElement, opts?: { duration?: number }) => void } }).__lenis;
     if (lenis) {
-      lenis.scrollTo(window.innerHeight, { duration: 1.4 });
+      lenis.scrollTo(nextSection, { duration: 1.4 });
     } else {
       window.scrollTo({
-        top: window.innerHeight,
+        top: window.scrollY + nextSection.getBoundingClientRect().top,
         behavior: "smooth",
       });
     }
@@ -94,7 +97,7 @@ export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoPro
   };
 
   return (
-    <section className="relative -mt-16 w-full h-screen min-h-[600px] overflow-hidden bg-black select-none">
+    <section ref={sectionRef} className="relative w-full h-screen min-h-[600px] overflow-hidden bg-black select-none">
       {/* Video Background Layer */}
       <div
         className="absolute inset-0 z-0 transition-transform duration-300 ease-out will-change-transform"
@@ -132,7 +135,7 @@ export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoPro
         <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
 
           {/* Main Requested Thai Phrase */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-semibold text-white tracking-tight leading-[1.3] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-semibold text-white tracking-tight leading-[1.3] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
             {language === "th" ? (
               <>
                 จากผืนดินอันอุดมสมบูรณ์<br />
@@ -144,7 +147,7 @@ export function GardenCoffeeIntroVideo({ onIntroEnd }: GardenCoffeeIntroVideoPro
                 <span className="text-[#f5d5aa]">To Quality Coffee in Every Cup</span>
               </>
             )}
-          </h1>
+          </h2>
 
           <p className="text-sm sm:text-lg md:text-xl text-stone-200 font-medium max-w-2xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] leading-relaxed">
             {language === "th"

@@ -34,7 +34,7 @@ export function SignatureStorySection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#fbf9f5] dark:bg-[#0f0c0a] text-stone-900 dark:text-white py-16 sm:py-24 overflow-hidden border-b border-stone-200/70 dark:border-white/10 transition-colors duration-300">
+    <section id="story" className="relative scroll-mt-20 w-full bg-[#fbf9f5] dark:bg-[#0f0c0a] text-stone-900 dark:text-white py-16 sm:py-24 overflow-hidden border-b border-stone-200/70 dark:border-white/10 transition-colors duration-300">
       {/* Subtle organic watermark text in top right like the screenshot */}
       <div className="absolute top-6 right-4 sm:right-12 select-none pointer-events-none opacity-[0.04] dark:opacity-[0.03] text-right font-black tracking-tight text-7xl sm:text-9xl leading-none">
         GOOD<br />COFFEE<br />BETTER<br />YOU
@@ -97,6 +97,7 @@ export function SignatureStorySection() {
             <ScrollRevealText delay={0.05} yOffset={20}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-px bg-[#b57a38]/40 dark:bg-[#d8a162]/40" />
+                <p className="text-sm font-semibold text-[#946025] dark:text-[#c69255]">{language === "th" ? "เรื่องราว" : "OUR STORY"}</p>
               </div>
             </ScrollRevealText>
             {/* Main Headline */}
@@ -104,13 +105,13 @@ export function SignatureStorySection() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-semibold text-stone-950 dark:text-white tracking-tight leading-[1.2]">
                 {language === "th" ? (
                   <>
-                    มากกว่าความเข้ม<br />
-                    <span className="text-[#3a2b20] dark:text-[#f2ebe2]">คือคุณภาพที่สัมผัสได้</span>
+                    เรื่องราวของเรา<br />
+                    <span className="text-[#3a2b20] dark:text-[#f2ebe2]">เริ่มต้นจากกาแฟในทุกแก้ว</span>
                   </>
                 ) : (
                   <>
-                    Beyond Rich Intensity,<br />
-                    <span className="text-[#3a2b20] dark:text-[#f2ebe2]">Crafted Quality You Can Feel</span>
+                    Our Story,<br />
+                    <span className="text-[#3a2b20] dark:text-[#f2ebe2]">Behind Every Cup</span>
                   </>
                 )}
               </h2>

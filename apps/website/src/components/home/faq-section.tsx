@@ -24,6 +24,9 @@ export function FaqSection() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-stone-900 dark:text-white tracking-tight">
               {faq.title[language]}
             </h2>
+            <p className="mt-4 max-w-3xl text-sm sm:text-base leading-relaxed text-stone-600 dark:text-stone-300">
+              {faq.subtitle[language]}
+            </p>
           </ScrollRevealText>
         </div>
 

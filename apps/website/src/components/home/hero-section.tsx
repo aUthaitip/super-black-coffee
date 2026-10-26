@@ -67,7 +67,7 @@ export function HeroSection() {
     },
   ];
 
-  const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
+  const [activeFeatureIndex, setActiveFeatureIndex] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   const currentFeature: FeatureItem = featureList[activeFeatureIndex] ?? (featureList[0] as FeatureItem);
 
@@ -94,39 +94,12 @@ export function HeroSection() {
         <div className="w-full min-w-0 max-w-2xl text-left">
           {/* Clean Headline with Word Balancing & Emphasized Accent */}
           <ScrollRevealText delay={0.05} yOffset={28}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[54px] font-medium tracking-tight text-stone-900 dark:text-white leading-[1.2]">
-              {language === "th" ? (
-                <span className="block">
-                  <span className="text-4xl sm:text-5xl md:text-6xl lg:text-[56px] xl:text-[64px] font-black text-[#b57a38] tracking-normal inline-block mr-2">
-                    กาแฟออร์แกนิก
-                  </span>
-                  <span className="text-stone-900 dark:text-white text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[50px] font-bold">
-                    จากไร่ปลูกเอง
-                  </span>
-                  <span className="block text-stone-900 dark:text-white text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[50px] font-bold mt-1">
-                    สู่แก้วของคุณ
-                    <span className="text-[#b57a38] text-4xl sm:text-5xl md:text-6xl font-black tracking-widest inline-block ml-1">
-                      ...
-                    </span>
-                  </span>
-                </span>
-              ) : (
-                <span className="block">
-                  <span className="text-5xl sm:text-6xl md:text-7xl lg:text-[68px] xl:text-[76px] font-black text-[#b57a38] tracking-normal inline-block mr-3">
-                    Organic Coffee,
-                  </span>
-                  <span className="text-stone-900 dark:text-white text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[50px] font-bold">
-                    From Our
-                  </span>
-                  <span className="block text-stone-900 dark:text-white text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[50px] font-bold mt-1">
-                    Own Farm
-                    <span className="text-[#b57a38] text-4xl sm:text-5xl md:text-6xl font-black tracking-widest inline-block ml-1">
-                      ...
-                    </span>
-                  </span>
-                </span>
-              )}
-              <span className="block mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[42px] font-medium text-stone-700 dark:text-stone-200">
+            <p className="mb-5 text-sm sm:text-base font-semibold text-[#946025] dark:text-[#c69255]">
+              {hero.eyebrow[language]}
+            </p>
+            <h1 className="text-4xl sm:text-5xl lg:text-[48px] xl:text-[56px] font-bold tracking-tight leading-[1.3] text-stone-900 dark:text-white">
+              <span className="block">{hero.headingLine1[language]}</span>
+              <span className="block mt-3 text-3xl sm:text-4xl lg:text-[36px] xl:text-[42px] text-[#a96e2e] dark:text-[#c69255]">
                 {hero.headingLine2[language]}
               </span>
             </h1>
@@ -143,18 +116,18 @@ export function HeroSection() {
           <ScrollReveal delay={0.25} yOffset={20}>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
-                href="/franchise"
+                href="/franchise#calculator"
                 className="px-7 py-3.5 rounded-full bg-stone-950 hover:bg-[#b57a38] text-white dark:bg-[#c69255] dark:hover:bg-[#d8a162] dark:text-stone-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-stone-900/10 flex items-center gap-2 group active:scale-95"
               >
-                <span>{hero.exploreMenuText[language]}</span>
+                <span>{hero.packagesText[language]}</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
               <Link
-                href="/about"
+                href="#contact"
                 className="px-7 py-3.5 rounded-full bg-[#b57a38] hover:bg-[#9e672b] text-white font-bold text-sm tracking-wide shadow-md hover:shadow-[0_4px_20px_rgba(181,122,56,0.35)] transition-all flex items-center gap-2 active:scale-95"
               >
-                <span>{hero.findBranchText[language]}</span>
+                <span>{hero.consultText[language]}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

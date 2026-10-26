@@ -78,7 +78,7 @@ export function FranchisePageContent() {
       </section>
 
       {/* 2. KEY BENEFITS (ทำไมต้องเลือกเรา) */}
-      <section className="py-14 sm:py-16 bg-stone-100/70 dark:bg-[#100d0a] border-y border-stone-200 dark:border-white/5 transition-colors">
+      <section id="support" className="scroll-mt-24 py-14 sm:py-16 bg-stone-100/70 dark:bg-[#100d0a] border-y border-stone-200 dark:border-white/5 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollRevealText delay={0.05} yOffset={20}>
             <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
@@ -120,7 +120,7 @@ export function FranchisePageContent() {
       </section>
 
       {/* 3. 5 STEPS TO FRANCHISE */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="steps" className="scroll-mt-24 py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollRevealText delay={0.05} yOffset={20}>
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-stone-950 dark:text-white tracking-tight">

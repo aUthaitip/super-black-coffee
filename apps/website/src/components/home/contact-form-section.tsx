@@ -19,7 +19,7 @@ import {
 } from "@/lib/validations/contact";
 import { ScrollReveal, ScrollRevealText } from "@/components/ui/scroll-reveal";
 
-export function ContactFormSection() {
+export function ContactFormSection({ franchise = false }: { franchise?: boolean }) {
   const { language } = useLanguage();
   const contact = CONTACT_DATA;
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -45,7 +45,7 @@ export function ContactFormSection() {
       name: "",
       phone: "",
       email: "",
-      subject: "general",
+      subject: franchise ? "franchise" : "general",
       message: "",
     },
   });
@@ -108,7 +108,7 @@ export function ContactFormSection() {
   return (
     <section
       id="contact"
-      className="relative z-10 py-24 sm:py-32 bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white overflow-hidden transition-colors duration-300"
+      className="relative z-10 scroll-mt-24 py-24 sm:py-32 bg-[#faf8f5] dark:bg-black text-stone-900 dark:text-white overflow-hidden transition-colors duration-300"
     >
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/3 right-10 w-96 h-96 bg-[#c69255]/[0.05] rounded-full blur-[140px] pointer-events-none" />
@@ -119,10 +119,16 @@ export function ContactFormSection() {
           <div className="lg:col-span-5 space-y-8 text-left">
             <ScrollRevealText delay={0.05} yOffset={24}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-stone-900 dark:text-white tracking-tight leading-[1.2]">
-                {contact.title[language]}
+                {franchise
+                  ? language === "th" ? "สนใจร่วมธุรกิจ" : "Become a Partner"
+                  : contact.title[language]}
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[#b47836] dark:text-[#c69255] leading-relaxed font-bold">
-                {contact.subtitle[language]}
+                {franchise
+                  ? language === "th"
+                    ? "ฝากข้อมูลติดต่อ พร้อมทำเลหรืองบลงทุนที่คุณวางไว้ เพื่อพูดคุยรายละเอียดแฟรนไชส์กับทีมงาน"
+                    : "Leave your contact details and tell us about your location or budget to discuss franchise options with our team."
+                  : contact.subtitle[language]}
               </p>
             </ScrollRevealText>
 

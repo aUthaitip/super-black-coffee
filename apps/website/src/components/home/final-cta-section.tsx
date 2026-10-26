@@ -36,6 +36,12 @@ export function FinalCtaSection() {
             {finalCta.description[language]}
           </p>
         </ScrollRevealText>
+        <a
+          href="#contact"
+          className="mt-8 inline-flex items-center justify-center rounded-full bg-[#c69255] px-7 py-3.5 text-sm font-bold text-stone-950 hover:bg-[#d8a162] transition-colors"
+        >
+          {finalCta.consultText[language]}
+        </a>
       </div>
     </section>
   );
